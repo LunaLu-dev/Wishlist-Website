@@ -1,0 +1,19 @@
+[debug] [2023-10-22T19:39:15.299Z] ----------------------------------------------------------------------
+[debug] [2023-10-22T19:39:15.301Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\lunan\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2023-10-22T19:39:15.301Z] CLI Version:   12.7.0
+[debug] [2023-10-22T19:39:15.302Z] Platform:      win32
+[debug] [2023-10-22T19:39:15.302Z] Node Version:  v21.0.0
+[debug] [2023-10-22T19:39:15.302Z] Time:          Sun Oct 22 2023 21:39:15 GMT+0200 (Central European Summer Time)
+[debug] [2023-10-22T19:39:15.302Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-10-22T19:39:15.399Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-10-22T19:39:15.399Z] > authorizing via signed-in user (luna.nordbergh2@gmail.com)
+[info] i  emulators: Starting emulators: hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: hosting"}}
+[debug] [2023-10-22T19:39:15.408Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-10-22T19:39:15.408Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-10-22T19:39:15.408Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-10-22T19:39:15.415Z] [hub] writing locator at C:\Users\lunan\AppData\Local\Temp\hub-wishlist-website-b0f92.json
+[debug] [2023-10-22T19:39:15.427Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/wishlist-website-b0f92/sites 
+[debug] [2023-10-22T19:39:16.596Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/wishlist-website-b0f92/sites 200
+[debug] [2023-10-22T19:39:16.596Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/wishlist-website-b0f92/sites {"sites":[{"name":"projects/wishlist-website-b0f92/sites/wishlist-website-b0f92","defaultUrl":"https://wishlist-website-b0f92.web.app","appId":"1:1075962776143:web:a9f688ac1125c7edfcf83a","type":"DEFAULT_SITE"}]}
+[debug] [2023-10-22T19:39:16.596Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/wishlist-website-b0f92/webApps/1:1075962776143:web:a9f688ac1125c7edfcf83a/config [none]
