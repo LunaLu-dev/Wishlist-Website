@@ -1,0 +1,10 @@
+img{
+	object-fit: cover;
+}
+
+.folder-tn{
+    border-radius: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    overflow: hidden;
+}
