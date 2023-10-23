@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, onValue, child, push, update } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 @Component({
   selector: 'app-root-folders',
@@ -12,13 +12,6 @@ import { getDatabase, ref, onValue, child, push, update } from "firebase/databas
 export class RootFoldersComponent {
 
   ngOnInit() {
-    // Import the functions you need from the SDKs you need
-
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
       apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
       authDomain: "wishlist-website-b0f92.firebaseapp.com",

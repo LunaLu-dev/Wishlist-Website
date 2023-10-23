@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { RootFoldersComponent } from './root-folders/root-folders.component';
 import { CreateNewComponent } from './create-new/create-new.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoadCategoryComponent } from './load-category/load-category.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     RootFoldersComponent,
     CreateNewComponent,
     PageNotFoundComponent,
+    LoadCategoryComponent,
   ],
   imports: [
     BrowserModule,
