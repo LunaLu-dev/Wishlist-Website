@@ -1,19 +1,8 @@
-<!--<div>
-    <label>Img Address</label>
-    <br>
-    <input id="root-img-new" type="text">
-    <br>
-    <br>
-    <label >Name</label>
-    <br>
-    <input id="root-name-new" type="text">
-    <br>
-    <br>
-    <button onclick="create_new_root();">SUBMIT</button>
-<div>-->
+<form [formGroup]="myForm">
 
-    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-
-        <button class="button" type="submit">Purchase</button>
-      
-      </form>
+   <input placeholder="email" formControlName="email">
+   <input placeholder="message" formControlName="message">
+   <input placeholder="career" formControlName="career">
+   
+</form>
+  
