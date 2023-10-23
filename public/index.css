@@ -38,7 +38,6 @@ img {
   cursor: pointer;
 }
 
-
 @keyframes img-zoom-in {
   0%{
       transform: scale(1);
@@ -47,7 +46,6 @@ img {
       transform: scale(1.2);
   }
 }
-
 @keyframes img-zoom-out {
   0%{
       transform: scale(1.2);
@@ -55,4 +53,20 @@ img {
   100%{
       transform: scale(1);
   }
+}
+
+.create-save-button{
+  background-color: #1181d1;
+  color: #dee3da;
+  font-size: 20px;
+  width: 100px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.create-fld{
+  width: 70%;
+  height: 50px;
+  font-size: 45px;
+  border-radius: 5px;
 }

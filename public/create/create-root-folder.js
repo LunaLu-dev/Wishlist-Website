@@ -36,3 +36,7 @@ window.onload = () => {
         });
     });
 }
+
+document.getElementById('img-root-address-fld').addEventListener('change', () => {
+    document.getElementById('preview-create-root-img').src = document.getElementById("img-root-address-fld").value;
+});
