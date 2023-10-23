@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 @Component({
   selector: 'app-root-folders',
@@ -32,14 +33,89 @@ export class RootFoldersComponent {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    this.test(app);
+    const database = getDatabase(app);
+
+    var userID = 1;
+
+    const db = getDatabase();
+    const dbref = ref(db, 'user_' + userID + '/root/');
+    onValue(dbref, (snapshot) => {
+      const data = snapshot.val();
+
+      const entries = [];
+      for (const key in data) {
+        const entry = {
+          namef: key,
+          dataf: data[key]
+        };
+        entries.push(entry);
+      }
+
+      console.log(entries[0].namef);
+
+      const attr = [];
+      
+      for (let [key, value] of Object.entries(entries[0].dataf)) {
+        console.log(`${key}: ${value}`);
+        attr.push(value);
+      }
+      console.log(attr);
+      //0. img
+      //1. price
+      //2. name
+      //3. link
+
+      //let img = attr[0]
+
+      console.log(typeof attr[0] === "string")
 
 
 
+
+
+
+
+
+      if (typeof attr[0] === "string" && typeof attr[1] === "string" && typeof attr[2] === "string"){
+
+        var template = document.createElement("div");
+        var divTn = document.createElement("div");
+        divTn.classList.add("tn-container");
+        var img = document.createElement("img");
+        img.setAttribute("src", attr[0]);
+        img.classList.add("folder-tn");
+        var name = document.createElement("h1");
+        var name_text = document.createTextNode(attr[2]);
+        name.appendChild(name_text);
+        var price = document.createElement("h2");
+        var price_value = document.createTextNode(attr[1]);
+        price.appendChild(price_value);
+  
+        divTn.appendChild(img);
+  
+        template.appendChild(divTn);
+        template.appendChild(name);
+        template.appendChild(price);
+        var element = document.getElementById("root-folder-bundle-div");
+        if (element != null){
+          element.appendChild(template); 
+        }else{
+          console.error("ERRoR: element is equal to null");
+        }
+      }else{
+        console.error("ERRoR: Database Values Incorect Formatted");
+      }
+    });
   }
-
-  test(app :any) {
-    console.log(app)
-  }
-
 }
+/*
+<div id=root-folder-bundle-div>
+  <div>
+      <div class="tn-container">
+        <img src=$imgsrc class="folder-tn">
+      </div>
+      <h1>$name</h1>
+      <h2>$price</h2>
+  </div> 
+</div>
+*/
