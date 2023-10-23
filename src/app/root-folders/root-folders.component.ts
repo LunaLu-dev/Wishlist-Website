@@ -30,8 +30,7 @@ export class RootFoldersComponent {
 
     var userID = 1;
 
-    const db = getDatabase();
-    const dbref = ref(db, 'user_' + userID + '/root/');
+    const dbref = ref(database, 'user_' + userID + '/root/');
     onValue(dbref, (snapshot) => {
       const data = snapshot.val();
 
@@ -52,7 +51,6 @@ export class RootFoldersComponent {
           //console.log(`${key}: ${value}`);
           attr.push(value);
         }
-        console.log(attr);
         //0. img
         //1. name
 
