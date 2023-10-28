@@ -3,7 +3,6 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase
 import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
 
-
 window.onload = () => {
     document.getElementById('save-button').addEventListener('click', () => {
         
@@ -34,6 +33,11 @@ window.onload = () => {
           img: document.getElementById('img-root-address-fld').value,
           title: document.getElementById('name-root-fld').value
         });
+        var delayInMilliseconds = 1000; //1 second
+
+        setTimeout(function() {
+          location.pathname = '';
+        }, delayInMilliseconds);
     });
 }
 

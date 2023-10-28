@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Wishlist",
+  "description": "A chrome extension that makes it easy to add things to your wishlist",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
+    }
+  }
+}
