@@ -37,9 +37,9 @@ window.onload = () => {
     
 
         //Gets the key for new push
-        const newPostKey = push(child(ref(database), '/user_1/' + document.getElementById("cat-root-fld").value)).key;
+        const newPostKey = push(child(ref(database), '/user_1/category/' + document.getElementById("cat-root-fld").value)).key;
     
-        set(ref(database, 'user_1/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
+        set(ref(database, 'user_1/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
           img: document.getElementById('img-root-fld').value,
           title: document.getElementById('name-root-fld').value,
           price: document.getElementById('price-root-fld').value,

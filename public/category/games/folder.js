@@ -33,7 +33,7 @@ window.onload = () => {
   
       var userID = 1;
   
-      const dbref = ref(database, 'user_' + userID + '/games/');
+      const dbref = ref(database, 'user_' + userID + '/cat/games/');
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   
