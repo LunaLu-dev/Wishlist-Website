@@ -3,4 +3,6 @@ This is a wishlist website that reads from a firebase database and shows images 
 
 <h3>To Do</h3>
 
+* Login System
 * Add differnt users support
+* User Portal to add, modify and delete entries 

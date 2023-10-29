@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js"
 
 
 window.onload = () => {
