@@ -6,10 +6,7 @@ function getBaseUrl(url) {
   var parser = document.createElement('a');
   parser.href = url;
 
-  var base_url = parser.protocol + '://' + parser.hostname;
-  var cut_url = base_url.replace("https://www.", "");
-  return cut_url;
-
+  return parser.hostname;
 }
 
 
