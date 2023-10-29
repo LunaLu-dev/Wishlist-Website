@@ -15,8 +15,14 @@ window.onload = () => {
   }
 
     document.getElementById('save-button').addEventListener('click', () => {
+
+      if(document.getElementById("cat-root-fld").value == "category"){
         
-        console.log("ADDING NEW ROOT FOLDER TO DATABASE :)");
+        document.getElementById('save-button').style.backgroundColor = "#ff0000";
+        document.getElementById('cat-root-fld').style.borderBlockColor = "#ff0000";
+
+      }else{
+        //console.log("ADDING NEW ROOT FOLDER TO DATABASE :)");
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -51,7 +57,8 @@ window.onload = () => {
         localStorage.removeItem("name");
         localStorage.removeItem("price");
         localStorage.removeItem("link");
-
+      }
+        
     });
 }
 
