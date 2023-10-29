@@ -28,9 +28,6 @@ chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
     // Get the ID of the tab that contains the iframe.
     chrome.tabs.query({url: "https://wishlist.aiboteri.net/*"}, function(tabs) {
     var tabId = tabs[0].id;
-    console.log(tabId);
-    console.log(taburl);
-    console.log(img);
   
     chrome.scripting.executeScript({
       target: {tabId},
