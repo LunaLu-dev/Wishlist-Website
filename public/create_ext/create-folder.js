@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-import { } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js"
 
 
 window.onload = () => {
@@ -14,8 +13,6 @@ window.onload = () => {
   if(localStorage.getItem("img") != ""){
     document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
   }
-
-
 
     document.getElementById('save-button').addEventListener('click', () => {
         
@@ -40,9 +37,9 @@ window.onload = () => {
     
 
         //Gets the key for new push
-        const newPostKey = push(child(ref(database), '/user_1/root')).key;
+        const newPostKey = push(child(ref(database), '/user_1/' + document.getElementById("cat-root-fld").value)).key;
     
-        set(ref(database, 'user_1/root/' + newPostKey), {
+        set(ref(database, 'user_1/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
           img: document.getElementById('img-root-fld').value,
           title: document.getElementById('name-root-fld').value,
           price: document.getElementById('price-root-fld').value,
