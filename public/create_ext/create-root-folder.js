@@ -43,9 +43,17 @@ window.onload = () => {
     
         set(ref(database, 'user_1/root/' + newPostKey), {
           img: document.getElementById('img-root-fld').value,
-          title: document.getElementById('name-root-fld').value
+          title: document.getElementById('name-root-fld').value,
+          price: document.getElementById('price-root-fld').value,
+          link: document.getElementById('link-root-fld').value
         });
-        localStorage.clear();
+
+        //clears auto saved values after submit
+        localStorage.removeItem("img");
+        localStorage.removeItem("name");
+        localStorage.removeItem("price");
+        localStorage.removeItem("link");
+
     });
 }
 

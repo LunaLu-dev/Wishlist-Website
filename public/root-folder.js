@@ -2,6 +2,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
+function getBaseUrl(url) {
+  var parser = document.createElement('a');
+  parser.href = url;
+
+  var base_url = parser.protocol + '://' + parser.hostname;
+  var cut_url = base_url.replace("https:://www.", "");
+  return cut_url;
+
+}
+
 
 window.onload = () => {
     const firebaseConfig = {
@@ -40,37 +50,49 @@ window.onload = () => {
           const attr = [];
         
           for (let [key, value] of Object.entries(entries[key2].dataf)) {
-            //console.log(`${key}: ${value}`);
+            console.log(`${key}: ${value}`);
             attr.push(value);
           }
           //0. img
-          //1. name
+          //1. link
+          //2. price
+          //3. name
   
   
-          if (typeof attr[0] === "string" && typeof attr[1] === "string"){
           
-            var template = document.createElement("div");
-            var divTn = document.createElement("div");
-            divTn.classList.add("tn-container");
-            var img = document.createElement("img");
-            img.setAttribute("src", attr[0]);
-            img.classList.add("folder-tn");
-            var name = document.createElement("h1");
-            var name_text = document.createTextNode(attr[1]);
-            name.appendChild(name_text);
+          var template = document.createElement("div");
+
+          var divTn = document.createElement("div");
+          divTn.classList.add("tn-container");
+          divTn.setAttribute("onClick", "window.location = '" + attr[1] + "';");
+
+          var img = document.createElement("img");
+          img.setAttribute("src", attr[0]);
+          img.classList.add("folder-tn");
+
+          var name = document.createElement("h1");
+          var name_text = document.createTextNode(attr[3]);
+          name.appendChild(name_text);
+
+          var price = document.createElement("h3");
+          var price_text = document.createTextNode(attr[2]);
+          price.appendChild(price_text);
+
+          var src_url = document.createElement("h5");
+          var src_url_text = document.createTextNode(getBaseUrl(attr[1]));
+          src_url.appendChild(src_url_text);
   
-            divTn.appendChild(img);
-  
-            template.appendChild(divTn);
-            template.appendChild(name);
-            var element = document.getElementById("root-folder-bundle-div");
-            if (element != null){
-              element.appendChild(template); 
-            }else{
-              console.error("ERRoR: element is equal to null");
-            }
+          divTn.appendChild(img);
+          template.appendChild(divTn);
+          template.appendChild(name);
+          template.appendChild(price);
+          template.appendChild(src_url);
+
+          var element = document.getElementById("root-folder-bundle-div");
+          if (element != null){
+            element.appendChild(template); 
           }else{
-            console.error("ERRoR: Database Values Incorect Formatted");
+            console.error("ERRoR: element is equal to null");
           }
         }
       });
@@ -83,6 +105,7 @@ window.onload = () => {
         <img src=$imgsrc class="folder-tn">
       </div>
       <h1>$name</h1>
+      <h3>&price</h3>
   </div> 
 </div>
 */

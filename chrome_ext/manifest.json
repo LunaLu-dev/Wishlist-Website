@@ -15,5 +15,17 @@
       "48": "img/icon-48.png",
       "128": "img/icon-128.png"
     }
-  }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://wishlist.aiboteri.net/*"
+  ]
 }
