@@ -70,3 +70,8 @@ img {
   font-size: 45px;
   border-radius: 5px;
 }
+
+.template-div{
+  overflow-wrap: break-word;
+  width: 220px;
+}

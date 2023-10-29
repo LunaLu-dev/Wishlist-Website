@@ -59,6 +59,7 @@ window.onload = () => {
   
           
           var template = document.createElement("div");
+          template.classList.add("template-div");
 
           var divTn = document.createElement("div");
           divTn.classList.add("tn-container");

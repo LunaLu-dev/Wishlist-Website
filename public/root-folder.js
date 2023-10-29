@@ -54,7 +54,7 @@ window.onload = () => {
 
           var divTn = document.createElement("div");
           divTn.classList.add("tn-container");
-          divTn.setAttribute("onClick", "window.location.pathname = 'category/" + attr[1] + "';");
+          divTn.setAttribute("onClick", "window.location.pathname = window.location.pathname + 'category/" + attr[1] + "';");
 
           var img = document.createElement("img");
           img.setAttribute("src", attr[0]);
