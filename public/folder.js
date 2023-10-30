@@ -26,11 +26,12 @@ window.onload = () => {
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const database = getDatabase(app);
+
       
+      var category_url = window.location.pathname;
+      var uid = "user_1";
   
-      var userID = 1;
-  
-      const dbref = ref(database, 'user_' + userID + '/category/books/');
+      const dbref = ref(database, uid + category_url);
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   
@@ -48,7 +49,6 @@ window.onload = () => {
           const attr = [];
         
           for (let [key, value] of Object.entries(entries[key2].dataf)) {
-            console.log(`${key}: ${value}`);
             attr.push(value);
           }
           //0. img

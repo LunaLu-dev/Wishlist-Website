@@ -2,6 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
+var uid = "user_1"
+/*TEST VALUE REPLACE THIS*/
+
 
 window.onload = () => {
   
@@ -10,7 +13,7 @@ window.onload = () => {
   document.getElementById("price-root-fld").value = localStorage.getItem("price");
   document.getElementById("link-root-fld").value = localStorage.getItem("link");
 
-  if(localStorage.getItem("img") != ""){
+  if(localStorage.getItem("img") != ""){ 
     document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
   }
 
@@ -22,7 +25,6 @@ window.onload = () => {
         document.getElementById('cat-root-fld').style.borderBlockColor = "#ff0000";
 
       }else{
-        //console.log("ADDING NEW ROOT FOLDER TO DATABASE :)");
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -35,22 +37,46 @@ window.onload = () => {
           appId: "1:1075962776143:web:a9f688ac1125c7edfcf83a",
           measurementId: "G-04H8TLJ8EK"
         };
-    
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const database = getDatabase(app);
-    
 
-        //Gets the key for new push
-        const newPostKey = push(child(ref(database), '/user_1/category/' + document.getElementById("cat-root-fld").value)).key;
+
+        if(document.getElementById("cat-root-fld").value == 'add_new'){
+          const newPostKey = push(child(ref(database), "/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
     
-        set(ref(database, 'user_1/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
-          img: document.getElementById('img-root-fld').value,
-          title: document.getElementById('name-root-fld').value,
-          price: document.getElementById('price-root-fld').value,
-          link: document.getElementById('link-root-fld').value
-        });
+          set(ref(database, uid + '/root/' + newPostKey), {
+            img: document.getElementById('img-root-fld').value,
+            title: document.getElementById('coustom-root-fld').value,
+            link: document.getElementById('coustom-root-fld').value.toLowerCase().replaceAll(" ", "_")
+          });
+
+          //Gets the key for new push
+          const newPostKey2 = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+
+          set(ref(database, uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
+            img: document.getElementById('img-root-fld').value,
+            title: document.getElementById('name-root-fld').value,
+            price: document.getElementById('price-root-fld').value,
+            link: document.getElementById('link-root-fld').value
+          });
+
+
+        }else{
+          //Gets the key for new push
+          const newPostKey = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+    
+          set(ref(database, uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
+            img: document.getElementById('img-root-fld').value,
+            title: document.getElementById('name-root-fld').value,
+            price: document.getElementById('price-root-fld').value,
+            link: document.getElementById('link-root-fld').value
+          });
+        }
+
+        
 
         //clears auto saved values after submit
         localStorage.removeItem("img");
@@ -58,7 +84,6 @@ window.onload = () => {
         localStorage.removeItem("price");
         localStorage.removeItem("link");
       }
-        
     });
 }
 
@@ -74,4 +99,12 @@ document.getElementById('price-root-fld').addEventListener('change', () => {
 });
 document.getElementById('link-root-fld').addEventListener('change', () => {
   localStorage.setItem("link", document.getElementById("link-root-fld").value);
+});
+document.getElementById('cat-root-fld').addEventListener('change', () => {
+  localStorage.setItem("category", document.getElementById("cat-root-fld").value);
+  if(document.getElementById('cat-root-fld').value == "add_new"){
+    document.getElementById('coustom-root-fld').style.display = "block";
+  }else{
+    document.getElementById('coustom-root-fld').style.display = "none";
+  }
 });

@@ -21,9 +21,9 @@ window.onload = () => {
       const database = getDatabase(app);
       
   
-      var userID = 1;
+      var uid = 1;
   
-      const dbref = ref(database, 'user_' + userID + '/root/');
+      const dbref = ref(database, 'user_' + uid + '/root/');
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   
@@ -41,7 +41,6 @@ window.onload = () => {
           const attr = [];
         
           for (let [key, value] of Object.entries(entries[key2].dataf)) {
-            console.log(`${key}: ${value}`);
             attr.push(value);
           }
           //0. img
