@@ -2,11 +2,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
 import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
-var uid = "user_1"
-/*TEST VALUE REPLACE THIS*/
+var uid = localStorage.getItem('uid');
 
 
 window.onload = () => {
+
+  if(uid == ""){
+    window.location.pathname = "/login/index.html";
+  }
   
   document.getElementById("img-root-fld").value = localStorage.getItem("img");
   document.getElementById("name-root-fld").value = localStorage.getItem("name");

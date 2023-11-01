@@ -13,16 +13,17 @@ const firebaseApp = initializeApp({
 });
 const auth = getAuth(firebaseApp);
 
+console.log(auth);
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log("Logged In", uid);
-      // ...
+      console.log("Logged In", uid.toLowerCase());
+      //localStorage.setItem("uid", uid.toLowerCase());
     } else {
       // User is signed out
       console.log("logged Out");
-      // ...
     }
   });
 
-document.getElementById('login_btn').addEventListener("click", onAuthStateChanged);
+//document.getElementById('login_btn').addEventListener("click", onAuthStateChanged);
