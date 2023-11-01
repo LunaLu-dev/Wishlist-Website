@@ -18,6 +18,9 @@ const loginEmailPassword = async () => {
     const loginEmail = document.getElementById('login-email').value;
     const loginPassword = document.getElementById('login-password').value;
 
+    console.log(loginEmail);
+    console.log(loginPassword);
+
     try {
         const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
         console.log(userCredential.user);
@@ -25,7 +28,7 @@ const loginEmailPassword = async () => {
         console.error("An Error Occured");
         document.getElementById('login-email').style.borderColor = "#ff0000";
         document.getElementById('login-password').style.borderColor = "#ff0000";
-        document.getElementById('Status_Text').style.display = "block";
+        document.getElementById('statusText').style.display = "block";
     }
 }
 

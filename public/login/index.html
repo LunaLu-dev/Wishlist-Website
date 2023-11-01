@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <script type="module" src="login.js"></script>
     <title>Log In</title>
 </head>
 <body>
-    <input type="email" id="login-email" placeholder="email@domain.com"><br><br>
-    <input type="password" id="login-password" placeholder="password"><br><br>
-    <p id="Status_Text" style="display: none; color: #ff0000;">Incorrect E-Mail or Password</p>
-    <button id="login_btn">Log In</button>
+
+
+
+    <h2 class="title-locked">Login</h2>
+    <br>
+    <br>
+    <label for="email" class="login-label" id="usernameLabel">E-Mail</label><br>
+    <input type="email" class="login-fields" id="login-email"><br><br>
+    <label for="password" class="login-label" id="PasswordLabel">Password</label><br>
+    <input type="password" class="login-fields" id="login-password"><br><br>
+    <p id="statusText" style="display: none; color: #ff0000;">Incorrect Password or Email</p>
+    <button id="login_btn" class="login-fields2">Login</button>
+
+
 </body>
 </html>

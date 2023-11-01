@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Vithkuqi:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Vithkuqi:wght@500&family=Roboto:wght@700&display=swap');
+
+body{
+    font-family: 'Noto Sans Vithkuqi', sans-serif;
+}
+.container-canvas{
+    margin: auto;
+    background-color: #f5f7fa;
+    width: 500px;
+    height: 700px;
+    
+}
+.title-locked{
+    /*margin: auto;*/
+    text-align: center;
+}
+.login-fields{
+    width: 400px;
+    height: 50px;
+    margin-left: 50px;
+    font-size: 25px;
+}
+.login-label{
+    margin-left: 50px;
+}
+.login-fields2{
+    width: 410px;
+    height: 50px;
+    margin-left: 50px;
+    font-size: 25px;
+    font-family: 'Roboto', sans-serif; 
+    background-color: #0d6efd; 
+    color: #ffffff;
+    border-width: 1px;
+}
+.text-container{
+    width: max-content;
+    padding-top: 10px;
+    padding-left: 25px;
+}
+.content-wrapper{
+    border-style: ridge;
+    border-color: #adadad;
+    border-width: 1px;
+    display: flex;
+    width: 410px;
+    height: 50px;
+    margin-left: 50px;
+    font-size: 25px;
+    height: min-content;
+    background-color: #ffffff;
+}
