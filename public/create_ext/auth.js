@@ -19,12 +19,68 @@ const database = getDatabase(app);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-
-
 onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log("Logged In", uid);
+      console.log("LOGGED INTO"), uid;
+      
+
+      if(localStorage.getItem("img") != ""){ 
+        document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
+      }
+    
+        document.getElementById('save-button').addEventListener('click', () => {
+    
+          if(document.getElementById("cat-root-fld").value == "category"){
+            
+            document.getElementById('save-button').style.backgroundColor = "#ff0000";
+            document.getElementById('cat-root-fld').style.borderBlockColor = "#ff0000";
+    
+          }else{
+    
+            if(document.getElementById("cat-root-fld").value == 'add_new'){
+              const newPostKey = push(child(ref(database), "/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
+        
+              set(ref(database, uid + '/root/' + newPostKey), {
+                img: document.getElementById('img-root-fld').value,
+                title: document.getElementById('coustom-root-fld').value,
+                link: document.getElementById('coustom-root-fld').value.toLowerCase().replaceAll(" ", "_")
+              });
+    
+              //Gets the key for new push
+              const newPostKey2 = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+    
+              set(ref(database, uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
+                img: document.getElementById('img-root-fld').value,
+                title: document.getElementById('name-root-fld').value,
+                price: document.getElementById('price-root-fld').value,
+                link: document.getElementById('link-root-fld').value
+              });
+    
+    
+            }else{
+              //Gets the key for new push
+              const newPostKey = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+        
+              set(ref(database, uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
+                img: document.getElementById('img-root-fld').value,
+                title: document.getElementById('name-root-fld').value,
+                price: document.getElementById('price-root-fld').value,
+                link: document.getElementById('link-root-fld').value
+              });
+            }
+    
+            
+    
+            //clears auto saved values after submit
+            localStorage.removeItem("img");
+            localStorage.removeItem("name");
+            localStorage.removeItem("price");
+            localStorage.removeItem("link");
+          }
+        });
+
+      console.log("DATABASE UPDATED");
     } else {
       // User is signed out
       console.log("logged Out");
