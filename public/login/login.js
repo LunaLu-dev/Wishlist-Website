@@ -17,19 +17,32 @@ const loginEmailPassword = async () => {
 
     const loginEmail = document.getElementById('login-email').value;
     const loginPassword = document.getElementById('login-password').value;
+    //console.log(auth.uid);
 
-    console.log(loginEmail);
-    console.log(loginPassword);
+    /*console.log(loginEmail);
+    console.log(loginPassword);*/
 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
         console.log(userCredential.user);
+        //console.log(auth.uid);
     }catch (error){
-        console.error("An Error Occured");
+        console.error("An Error Occured", error);
         document.getElementById('login-email').style.borderColor = "#ff0000";
         document.getElementById('login-password').style.borderColor = "#ff0000";
         document.getElementById('statusText').style.display = "block";
     }
 }
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log("Logged In", uid);
+      localStorage.setItem("uid", uid);
+    } else {
+      // User is signed out
+      console.log("logged Out");
+    }
+});
 
 document.getElementById('login_btn').addEventListener("click", loginEmailPassword);
