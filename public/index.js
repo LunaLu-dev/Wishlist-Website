@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -14,24 +15,24 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
+    // Optional argument. If true, the SDK automatically refreshes App Check
+    // tokens as needed.
+    isTokenAutoRefreshEnabled: true
+});
 
-const loginEmailPassword = async () => {
-
-    const loginEmail = document.getElementById('login-email').value;
-    const loginPassword = document.getElementById('login-password').value;
+const logout = async () => {
 
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-        console.log(userCredential.user);
+        const userCredential = await signOut(auth);
+        console.log("SUCCESSFULLY LOGGED OUT");
     }catch (error){
         console.error("An Error Occured", error);
-        document.getElementById('login-email').style.borderColor = "#ff0000";
-        document.getElementById('login-password').style.borderColor = "#ff0000";
-        document.getElementById('statusText').style.display = "block";
     }
 }
 
-onAuthStateChanged(auth, (user) => {
+/*onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       console.log("Logged In", uid);
@@ -39,6 +40,6 @@ onAuthStateChanged(auth, (user) => {
     } else {
       console.log("Logged Out");
     }
-});
+});*/
 
-document.getElementById('login_btn').addEventListener("click", loginEmailPassword);
+document.getElementById('sign_out_btn').addEventListener("click", logout);
