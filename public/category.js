@@ -9,6 +9,16 @@ function getBaseUrl(url) {
   return parser.hostname;
 }
 
+// Match the regular expression against the URL.
+let page_url = window.location.pathname;
+var page_url_split = page_url.split("/");
+
+// Get the matched strings.
+var uid = page_url_split[2];
+var category = page_url_split[3];
+
+console.log(uid);
+console.log(category);
 
 window.onload = () => {
     const firebaseConfig = {
@@ -27,11 +37,8 @@ window.onload = () => {
       const analytics = getAnalytics(app);
       const database = getDatabase(app);
 
-      
-      var category_url = window.location.pathname;
-      var uid = "user_1";
   
-      const dbref = ref(database, uid + category_url);
+      const dbref = ref(database, uid + "/category/" + category);
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   
@@ -107,5 +114,8 @@ window.onload = () => {
       <h3>&price</h3>
   </div> 
 </div>
+
+
+https://wishlist.aiboteri.net/category/$uid/$category_name
 */
 

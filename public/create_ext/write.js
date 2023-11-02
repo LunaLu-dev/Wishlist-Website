@@ -22,7 +22,6 @@ const auth = getAuth(app);
 onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log("LOGGED INTO"), uid;
       
 
       if(localStorage.getItem("img") != ""){ 
@@ -39,18 +38,18 @@ onAuthStateChanged(auth, (user) => {
           }else{
     
             if(document.getElementById("cat-root-fld").value == 'add_new'){
-              const newPostKey = push(child(ref(database), "/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey = push(child(ref(database), "/users/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
         
-              set(ref(database, uid + '/root/' + newPostKey), {
+              set(ref(database, "users/" + uid + '/root/' + newPostKey), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('coustom-root-fld').value,
                 link: document.getElementById('coustom-root-fld').value.toLowerCase().replaceAll(" ", "_")
               });
     
               //Gets the key for new push
-              const newPostKey2 = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey2 = push(child(ref(database), "/users/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
     
-              set(ref(database, uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
+              set(ref(database, "users/" + uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('name-root-fld').value,
                 price: document.getElementById('price-root-fld').value,
@@ -60,30 +59,50 @@ onAuthStateChanged(auth, (user) => {
     
             }else{
               //Gets the key for new push
-              const newPostKey = push(child(ref(database), "/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey = push(child(ref(database), "/users/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
         
-              set(ref(database, uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
+              set(ref(database, "users/" + uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('name-root-fld').value,
                 price: document.getElementById('price-root-fld').value,
                 link: document.getElementById('link-root-fld').value
               });
             }
-    
-            
-    
+            console.log("DATABASE UPDATED");
             //clears auto saved values after submit
             localStorage.removeItem("img");
             localStorage.removeItem("name");
             localStorage.removeItem("price");
             localStorage.removeItem("link");
+            
           }
         });
-
-      console.log("DATABASE UPDATED");
-    } else {
+    }else{
       // User is signed out
       console.log("logged Out");
-      window.location.pathname = "login/index.html"
+      window.location.pathname = "login/index.html";
+    }
+});
+
+
+document.getElementById('img-root-fld').addEventListener('change', () => {
+    document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
+    localStorage.setItem("img", document.getElementById("img-root-fld").value);
+});
+document.getElementById('name-root-fld').addEventListener('change', () => {
+    localStorage.setItem("name", document.getElementById("name-root-fld").value);
+});
+document.getElementById('price-root-fld').addEventListener('change', () => {
+    localStorage.setItem("price", document.getElementById("price-root-fld").value);
+});
+document.getElementById('link-root-fld').addEventListener('change', () => {
+    localStorage.setItem("link", document.getElementById("link-root-fld").value);
+});
+document.getElementById('cat-root-fld').addEventListener('change', () => {
+    localStorage.setItem("category", document.getElementById("cat-root-fld").value);
+    if(document.getElementById('cat-root-fld').value == "add_new"){
+      document.getElementById('coustom-root-fld').style.display = "block";
+    }else{
+      document.getElementById('coustom-root-fld').style.display = "none";
     }
 });

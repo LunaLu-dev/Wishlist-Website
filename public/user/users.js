@@ -19,11 +19,16 @@ window.onload = () => {
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const database = getDatabase(app);
-      
+
+
+      let url = window.location.pathname;
+      // Split the URL into an array.
+      var urlParts = url.split("/");
+
+      // Get the last element of the array.
+      var uid = urlParts[urlParts.length - 1];
   
-      var uid = 1;
-  
-      const dbref = ref(database, 'user_' + uid + '/root/');
+      const dbref = ref(database,"users" + uid + '/root/');
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   
@@ -53,7 +58,7 @@ window.onload = () => {
 
           var divTn = document.createElement("div");
           divTn.classList.add("tn-container");
-          divTn.setAttribute("onClick", "window.location.pathname = window.location.pathname + 'category/" + attr[1] + "';");
+          divTn.setAttribute("onClick", "window.location.pathname = 'category/" + uid + "/"  + attr[1] + "';");
 
           var img = document.createElement("img");
           img.setAttribute("src", attr[0]);
@@ -87,4 +92,7 @@ window.onload = () => {
       <h1>$name</h1>
   </div> 
 </div>
+
+https://wishlist.aiboteri.net/user/$uid
+
 */

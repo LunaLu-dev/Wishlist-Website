@@ -6,10 +6,16 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [ {
-      "source": "/category/*",
+    "rewrites": [ 
+    {
+      "source": "/category/*/*",
       "destination": "/category.html"
-    } ]
+    },
+    {
+      "source": "/user/*",
+      "destination": "/user/index.html"
+    } 
+  ]
   },
   "emulators": {
     "hosting": {

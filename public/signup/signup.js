@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -21,24 +21,13 @@ const loginEmailPassword = async () => {
     const loginPassword = document.getElementById('login-password').value;
 
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+        const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
         console.log(userCredential.user);
     }catch (error){
-        console.error("An Error Occured", error);
+        console.error("An Error Occured");
         document.getElementById('login-email').style.borderColor = "#ff0000";
         document.getElementById('login-password').style.borderColor = "#ff0000";
-        document.getElementById('statusText').style.display = "block";
     }
 }
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log("Logged In", uid);
-      window.location.pathname = "";
-    } else {
-      console.log("Logged Out");
-    }
-});
 
 document.getElementById('login_btn').addEventListener("click", loginEmailPassword);

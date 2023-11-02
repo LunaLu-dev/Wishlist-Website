@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../login.css">
+    <link rel="stylesheet" href="../index.css">
+    <link rel="icon" href="/img/favicon-home-white.png">
     <script type="module" src="login.js"></script>
     <title>Log In</title>
 </head>
 <body>
-
-
-
-    <h2 class="title-locked">Login</h2>
-    <br>
-    <br>
-    <label for="email" class="login-label" id="usernameLabel">E-Mail</label><br>
-    <input type="email" class="login-fields" id="login-email"><br><br>
-    <label for="password" class="login-label" id="PasswordLabel">Password</label><br>
-    <input type="password" class="login-fields" id="login-password"><br><br>
-    <p id="statusText" style="display: none; color: #ff0000;">Incorrect Password or Email</p>
-    <button id="login_btn" class="login-fields2">Login</button>
-
-
-</body>
+    <div class="container-canvas">
+      <h2 class="title-locked">Log In</h2>
+      <br>
+      <br>
+      <label for="username" class="login-label" id="usernameLabel">E-Mail</label><br>
+      <input type="email" class="login-fields" id="login-email"><br><br>
+      <label for="password" class="login-label" id="PasswordLabel">Password</label><br>
+      <input type="password" class="login-fields" id="login-password"><br><br>
+      <button id="login_btn" class="login-fields2">Login</button>
+      <br>
+      <br>
+      <p>Do you not have an accout? <a href="../signup/">Create one here</a></p>
+      <p>Have you forgot your password? <a href="../reset/">Reset it here</a></p>
+    </div>
+  </body>
 </html>
