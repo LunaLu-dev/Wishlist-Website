@@ -21,9 +21,6 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
-
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
   isTokenAutoRefreshEnabled: true
 });
 
@@ -113,5 +110,10 @@ document.getElementById('cat-root-fld').addEventListener('change', () => {
       document.getElementById('coustom-root-fld').style.display = "block";
     }else{
       document.getElementById('coustom-root-fld').style.display = "none";
+    }
+
+    if(document.getElementById('cat-root-fld') != "category"){
+      document.getElementById('save-button').style.backgroundColor = "#1181d1";
+      document.getElementById('cat-root-fld').style.borderBlockColor = "#000000";
     }
 });

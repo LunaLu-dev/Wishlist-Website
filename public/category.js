@@ -39,8 +39,6 @@ window.onload = () => {
       const database = getDatabase(app);
       const appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
-        // Optional argument. If true, the SDK automatically refreshes App Check
-        // tokens as needed.
         isTokenAutoRefreshEnabled: true
       });
 
