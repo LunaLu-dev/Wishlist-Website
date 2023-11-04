@@ -18,9 +18,6 @@ var page_url_split = page_url.split("/");
 var uid = page_url_split[2];
 var category = page_url_split[3];
 
-console.log(uid);
-console.log(category);
-
 window.onload = () => {
     const firebaseConfig = {
         apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -44,11 +41,8 @@ window.onload = () => {
 
   
       const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
-      console.log("TEST");
-      console.log("USER_DATA_REFERENCE_PATH", "/user_data/" + uid + "/category/" + category);
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
-        console.log("data", data);
   
         const entries = [];
         for (const key in data) {
