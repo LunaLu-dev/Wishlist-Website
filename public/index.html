@@ -3,13 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
-        <title>Wishlist</title>
+        <link rel="stylesheet" href="login.css"
+        <title>wishlist</title>
         <link rel="icon" href="/img/white/favicon-white.png">
         <script defer type="module" src="index.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
     <body>
-      <h1>START PAGE HERE</h1>
-      <button id="sign_out_btn">sign out</button>
+      <center>
+        <h1 class="mainTitle">WISHLIST</h1>
+        <br>
+        <br>
+        <p>Got no specified link, search you friends username to find their wishlist</p>
+        <br>
+      </center>
+      <div class="container-canvas" style="background-color: #ffffff;">
+        <label for="username" class="login-label" id="usernameLabel">Username</label><br>
+        <input type="text" class="login-fields" id="username_fld"><br><br>
+        <button id="search_btn" class="login-fields2">Search</button>
+        <div id="search_results">
+        </div>
+      </div>
+      <button id="sign_in_btn" class="index-login-btns" style="right: 220px;" onclick="window.location.pathname = '/login/'">Sign In</button>
+      <button id="sign_up_btn" class="index-login-btns" style="right: 50px;" onclick="window.location.pathname = '/signup/'">Sign Up</button>
+      <button id="sign_out_btn"class="index-login-btns" style="right: 50px;">Sign Out</button>
     </body>
 </html>

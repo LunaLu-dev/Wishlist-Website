@@ -27,6 +27,8 @@ const appCheck = initializeAppCheck(app, {
 onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
+
+      window.sessionStorage.removeItem("last_path");
       
 
       if(localStorage.getItem("img") != ""){ 
@@ -43,18 +45,18 @@ onAuthStateChanged(auth, (user) => {
           }else{
     
             if(document.getElementById("cat-root-fld").value == 'add_new'){
-              const newPostKey = push(child(ref(database), "/users/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey = push(child(ref(database), "/user_data/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
         
-              set(ref(database, "users/" + uid + '/root/' + newPostKey), {
+              set(ref(database, "user_data/" + uid + '/root/' + newPostKey), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('coustom-root-fld').value,
                 link: document.getElementById('coustom-root-fld').value.toLowerCase().replaceAll(" ", "_")
               });
     
               //Gets the key for new push
-              const newPostKey2 = push(child(ref(database), "/users/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey2 = push(child(ref(database), "/user_data/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
     
-              set(ref(database, "users/" + uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
+              set(ref(database, "user_data/" + uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('name-root-fld').value,
                 price: document.getElementById('price-root-fld').value,
@@ -64,9 +66,9 @@ onAuthStateChanged(auth, (user) => {
     
             }else{
               //Gets the key for new push
-              const newPostKey = push(child(ref(database), "/users/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
+              const newPostKey = push(child(ref(database), "/user_data/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
         
-              set(ref(database, "users/" + uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
+              set(ref(database, "user_data/" + uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
                 img: document.getElementById('img-root-fld').value,
                 title: document.getElementById('name-root-fld').value,
                 price: document.getElementById('price-root-fld').value,

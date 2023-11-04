@@ -1,5 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
+import { getDatabase, ref, child, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -14,20 +16,47 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const database = getDatabase(app);
+const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
+    isTokenAutoRefreshEnabled: true
+});
 
-const loginEmailPassword = async () => {
 
-    const loginEmail = document.getElementById('login-email').value;
-    const loginPassword = document.getElementById('login-password').value;
+const signUpEmailPassword = async () => {
+
+    const signUpEmail = document.getElementById('signUp-email').value;
+    const signUpPassword = document.getElementById('signUp-password').value;
+    const signUpUsername = document.getElementById('signUp-username').value.replaceAll(" ", "_");
+    var username_valid = false;
+
+    const dbref = ref(database, "/user_index/" + signUpUsername);
+    
+    onValue(dbref, (snapshot) => {
+      const data = snapshot.val();
+      if (data == null){
+        set(ref(database, "user_index/" + signUpUsername), {
+            uid: userCredential.user.uid,
+            username: signUpUsername
+        });
+        username_valid = true;
+      }else{
+        document.getElementById('signUp-username').style.borderColor = "#ff0000";
+        document.getElementById('create_account_btn').style.borderColor = "#ff0000";
+        document.getElementById('error_display').innerText = "Username Taken :(";
+        document.getElementById('error_display').style.display = "block";
+      }
+    });
 
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
-        console.log(userCredential.user);
+        if(username_valid == true){
+            const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+        }
     }catch (error){
         console.error("An Error Occured");
-        document.getElementById('login-email').style.borderColor = "#ff0000";
-        document.getElementById('login-password').style.borderColor = "#ff0000";
+        document.getElementById('signUp-email').style.borderColor = "#ff0000";
+        document.getElementById('signUp-password').style.borderColor = "#ff0000";
     }
 }
 
-document.getElementById('login_btn').addEventListener("click", loginEmailPassword);
+document.getElementById('create_account_btn').addEventListener("click", signUpEmailPassword);
