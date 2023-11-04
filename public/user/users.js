@@ -28,7 +28,7 @@ window.onload = () => {
       // Get the last element of the array.
       var uid = urlParts[urlParts.length - 1];
   
-      const dbref = ref(database,"user_data" + uid + '/root/');
+      const dbref = ref(database,"user_data/" + uid + '/root/');
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
   

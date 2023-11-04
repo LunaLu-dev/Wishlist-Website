@@ -1,6 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
 
 function getBaseUrl(url) {
@@ -44,8 +44,11 @@ window.onload = () => {
 
   
       const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
+      console.log("TEST");
+      console.log("USER_DATA_REFERENCE_PATH", "/user_data/" + uid + "/category/" + category);
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
+        console.log("data", data);
   
         const entries = [];
         for (const key in data) {
