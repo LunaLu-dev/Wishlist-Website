@@ -45,12 +45,12 @@ onAuthStateChanged(auth, (user) => {
         const uid = user.uid;
         //BUTTONS - Desktop
         document.getElementById('sign_in_btn').innerText = "My List";
-        document.getElementById('sign_in_btn').onclick = "window.location.pathname = /user/" + uid;
+        document.getElementById('sign_in_btn').setAttribute('onclick','window.location.pathname = ' + "'/user/" + uid + "'");
         document.getElementById("sign_up_btn").style.display = "none";
 
         //DROPDOWN - Mobile
         document.getElementById('login_drop_btn').innerText = "My List";
-        document.getElementById('login_drop_btn').onclick = "window.location.pathname = /user/" + uid;
+        document.getElementById('login_drop_btn').setAttribute('onclick','window.location.pathname = ' + "'/user/" + uid + "'");
         document.getElementById("signup_drop_btn").style.display = "none";
 
 
@@ -167,11 +167,9 @@ window.onload = () => {
 
 window.addEventListener("resize", (event) => {
     if(window.innerWidth <= 1130){
-        console.log("Mobile Mode", window.innerWidth);
         document.getElementById('account_btns').style.display = "none";
         document.getElementById('hamburger-menu').style.display = "block";
     }else{
-        console.log("Computer Mode", window.innerWidth);
         document.getElementById('account_btns').style.display = "block";
         document.getElementById('hamburger-menu').style.display = "none";
     }
