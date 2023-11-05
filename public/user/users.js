@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
 
 
 window.onload = () => {
@@ -20,6 +21,7 @@ window.onload = () => {
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       const database = getDatabase(app);
+      const perf = getPerformance(app);
       const appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
         isTokenAutoRefreshEnabled: true

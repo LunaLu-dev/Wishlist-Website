@@ -90,9 +90,150 @@ img {
 .search_res{
   padding-left: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: 20px;
+  border-width: 1px;
   background-color: #ffffff;
   border-style: solid;
   border-color: #3264ed;
   border-radius: 5px;
+  width: 400px;
+  margin-left: 50px;
+  display: flex;
 }
+
+.search_res > h4{
+  padding-left: 10px;
+}
+
+.search_res:hover{
+  background-color: #bdc9ec;
+  cursor: pointer;
+}
+
+
+.menu-btn{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  justify-content: right;
+}
+
+
+.menu-content{
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  justify-content: right;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 2px;
+  background-color: #939da3b9;
+  /*max-height: 0px;
+  overflow: hidden;*/
+}
+.menu-content > h2:hover{
+  background-color: #9aade2;
+}
+
+.menu-content.show{
+  max-height: 300px;
+  transition: max-height 0.3s ease-in;
+}
+
+.menu-content.hide{
+  
+  transition: max-height 0.3s ease-in;
+  max-height: 0px;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Hamburger Menu*/
+/*.menu-btn {
+  background: #ffffff;
+  float: right;
+  width: 25px;
+  height: 25px;
+  padding-right: 5px;
+}
+.drop_container {
+  overflow: hidden;
+  max-height: 0;
+  font-size: 25px;
+}
+.drop_container.show {
+  max-height: 300px;
+  transition: max-height 0.3s ease-in;
+}
+.drop_container.hide {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+}
+.drop_container > .item {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  padding: 10px 0px 0px 0px;
+}*/

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="login.css"
+        <link rel="stylesheet" href="login.css">
         <title>wishlist</title>
         <link rel="icon" href="/img/white/favicon-white.png">
         <script defer type="module" src="index.js"></script>
@@ -22,10 +22,43 @@
         <input type="text" class="login-fields" id="username_fld"><br><br>
         <button id="search_btn" class="login-fields2">Search</button>
         <div id="search_results">
+          <div id="TEST-ITEM" class="search_res" onclick="window.location.pathname = '/user/4OKjWZpFk3Qt4pvsSAjS687svqj2'"><img src="https://cdn.discordapp.com/avatars/1098996480011944017/16110653b8e9491138082b6038342cd9.webp" style="width: 90px; height: 90px;"><h4>LunaLu</h4></div>
         </div>
       </div>
-      <button id="sign_in_btn" class="index-login-btns" style="right: 220px;" onclick="window.location.pathname = '/login/'">Sign In</button>
-      <button id="sign_up_btn" class="index-login-btns" style="right: 50px;" onclick="window.location.pathname = '/signup/'">Sign Up</button>
-      <button id="sign_out_btn"class="index-login-btns" style="right: 50px;">Sign Out</button>
+      <div id="account_btns" style="display: none;">
+        <button id="sign_in_btn" class="index-login-btns" style="right: 220px;" onclick="window.location.pathname = '/login/'">Sign In</button>
+        <button id="sign_up_btn" class="index-login-btns" style="right: 50px;" onclick="window.location.pathname = '/signup/'">Sign Up</button>
+        <button id="sign_out_btn"class="index-login-btns" style="right: 50px;">Sign Out</button>
+      </div>
+      <div id="hamburger-menu" style="display: none;">
+        <div class="menu-btn" id="menu-btn"><span id="menu_btn_arr" style="font-size: 50px;" class="material-symbols-outlined">expand_more</span></div>
+        <div class="menu-content" id="menu-content">
+          <h2 id="login_drop_btn" onclick="window.location.pathname = '/login'">Log In</h2>
+          <h2 id="signup_drop_btn" onclick="window.location.pathname = '/signup'">Sign Up</h2>
+          <h2 id="logout_drop_btn">Log Out</h2>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--<div class="dropdown-menu">
+          <div class="menu-btn"><span class="material-symbols-outlined">menu</span></div>
+          <div class="drop_container">
+            <a href="tjanster.html">Tj&aumlnster</a><br>
+            <a href="kontaktaOss.html">Kontakta oss</a><br>
+            <a href="hittaOss.html">Hitta oss</a><br>
+            <a href="omOss.html">Om oss</a><br>
+          </div>
+        </div>-->
+      
     </body>
 </html>
