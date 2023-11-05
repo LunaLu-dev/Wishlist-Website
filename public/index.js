@@ -85,7 +85,6 @@ const usernameSearch = async () => {
             for (let [key, value] of Object.entries(entries[key2].dataf)) {
                 if(key == "username" && value.includes(search_term)){
                     attr.push(value);
-                    //console.log(value , search_term, "Match Found");
                 }
             }
             //0. username
@@ -143,10 +142,9 @@ const usernameSearch = async () => {
             }
 
             /*
-            <div class="search_res">
+            <div class="search_res" onclick=window.location.pathname = '/user/$uid'>
                 <img src=$profile_img>
                 <h4>$username</h4>
-                <a href="/user/$uid">My List</a>
             </div>
             */
         }

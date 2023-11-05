@@ -85,6 +85,7 @@ img {
   position: absolute;
   top: 50px;
   font-size: 25px;
+  cursor: pointer;
 }
 
 .search_res{
@@ -117,6 +118,7 @@ img {
   top: 20px;
   right: 20px;
   justify-content: right;
+  cursor: pointer;
 }
 
 
@@ -137,6 +139,7 @@ img {
 }
 .menu-content > h2:hover{
   background-color: #9aade2;
+  cursor: pointer;
 }
 
 .menu-content.show{
@@ -150,90 +153,3 @@ img {
   max-height: 0px;
   overflow: hidden;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Hamburger Menu*/
-/*.menu-btn {
-  background: #ffffff;
-  float: right;
-  width: 25px;
-  height: 25px;
-  padding-right: 5px;
-}
-.drop_container {
-  overflow: hidden;
-  max-height: 0;
-  font-size: 25px;
-}
-.drop_container.show {
-  max-height: 300px;
-  transition: max-height 0.3s ease-in;
-}
-.drop_container.hide {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease-out;
-}
-.drop_container > .item {
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-  padding: 10px 0px 0px 0px;
-}*/
