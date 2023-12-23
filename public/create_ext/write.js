@@ -1,9 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
-import { getDatabase, ref, child, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getDatabase, ref, child, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app-check.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-performance.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -101,7 +101,6 @@ onAuthStateChanged(auth, (user) => {
       for (const key in data) {
         entries.push(key); 
       }
-      //console.log(entries);
       for (var i = 0; i < entries.length; i++ ){
         var category = document.createElement("option");
         category.setAttribute("value", entries[i]);

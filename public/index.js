@@ -1,9 +1,10 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
-import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app-check.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-performance.js"
+import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -21,6 +22,7 @@ const auth = getAuth(app);
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const perf = getPerformance(app);
+const storage = getStorage(app);
 const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
     isTokenAutoRefreshEnabled: true
@@ -112,24 +114,51 @@ const usernameSearch = async () => {
                   attr_spec.push(entries[1].dataf);
                   attr_spec.push(entries[2].dataf);
                   attr_spec.push(entries[3].dataf);
+                  attr_spec.push(entries[4].dataf)
 
                 });
-                //0. premium
-                //1. profile_img
-                //2. uid
-                //3. username
+                //0. firepfp
+                //1. premium
+                //2. profile_img
+                //3. uid
+                //4. username
+
+                var v_firepfp = attr_spec[0];
+                var v_premium = attr_spec[1];
+                var v_profile_img = attr_spec[2];
+                var v_uid = attr_spec[3];
+                var v_username = attr_spec[4];
+
+
 
 
 
                 var results_template = document.createElement("div");
                 results_template.classList.add("search_res");
-                results_template.setAttribute('onclick','window.location.pathname = ' + "'/user/" + attr_spec[2] + "'");
+                results_template.setAttribute('onclick','window.location.pathname = ' + "'/user/" + v_uid + "'");
 
                 var profile_img = document.createElement("img");
-                if(attr_spec[1] == "none"){
-                    attr_spec[1] = "/icons/account.png";
+                if(v_profile_img == ""){
+
+                    profile_img.setAttribute("src", "/img/icons/account.png");
+                    
+                }else if (v_premium == true && v_firepfp == true){
+
+                    getDownloadURL(storageRef(storage, attr_spec[2] + "/profile.png"))
+                    .then((url) => {
+                      profile_img.setAttribute("src", url);
+                    })
+                    .catch((error) => {
+                      // Handle any errors
+                      console.error("AN ERROR OCCURED", error);
+                    });
+
+                }else{
+
+                    profile_img.setAttribute("src", v_profile_img);
+
                 }
-                profile_img.setAttribute("src", attr_spec[1]);
+                //profile_img.setAttribute("src", attr_spec[1]);
                 profile_img.style.width = "90px";
                 profile_img.style.height = "90px";
 

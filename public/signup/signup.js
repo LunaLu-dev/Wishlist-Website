@@ -1,9 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app-check.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-performance.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -32,6 +32,7 @@ const signUpEmailPassword = async () => {
     const signUpEmail = document.getElementById('signUp-email').value;
     const signUpPassword = document.getElementById('signUp-password').value;
     const signUpUsername = document.getElementById('signUp-username').value.replaceAll(" ", "_");
+    const signUpPfp = document.getElementById('signUp-pfp').value;
 
     
 
@@ -44,8 +45,9 @@ const signUpEmailPassword = async () => {
           const data = snapshot.val();
           if (data == null){
             set(ref(database, "user_index/" + signUpUsername), {
+                firepfp: false,
                 premium: false,
-                profile_img: "none",
+                profile_img: signUpPfp,
                 uid: userCredential.user.uid,
                 username: signUpUsername
             });
