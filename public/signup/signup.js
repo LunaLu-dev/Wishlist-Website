@@ -32,30 +32,33 @@ const signUpEmailPassword = async () => {
     const signUpEmail = document.getElementById('signUp-email').value;
     const signUpPassword = document.getElementById('signUp-password').value;
     const signUpUsername = document.getElementById('signUp-username').value.replaceAll(" ", "_");
-    var username_valid = false;
 
-    const dbref = ref(database, "/user_index/" + signUpUsername);
     
-    onValue(dbref, (snapshot) => {
-      const data = snapshot.val();
-      if (data == null){
-        set(ref(database, "user_index/" + signUpUsername), {
-            uid: userCredential.user.uid,
-            username: signUpUsername
-        });
-        username_valid = true;
-      }else{
-        document.getElementById('signUp-username').style.borderColor = "#ff0000";
-        document.getElementById('create_account_btn').style.borderColor = "#ff0000";
-        document.getElementById('error_display').innerText = "Username Taken :(";
-        document.getElementById('error_display').style.display = "block";
-      }
-    });
 
     try {
-        if(username_valid == true){
-            const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
-        }
+        const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+
+        const dbref = ref(database, "/user_index/" + signUpUsername);
+    
+        onValue(dbref, (snapshot) => {
+          const data = snapshot.val();
+          if (data == null){
+            set(ref(database, "user_index/" + signUpUsername), {
+                premium: false,
+                profile_img: "none",
+                uid: userCredential.user.uid,
+                username: signUpUsername
+            });
+          }else{
+            document.getElementById('signUp-username').style.borderColor = "#ff0000";
+            document.getElementById('create_account_btn').style.borderColor = "#ff0000";
+            document.getElementById('error_display').innerText = "Username Taken :(";
+            document.getElementById('error_display').style.display = "block";
+          }
+        });
+
+        setTimeout(() => { window.location.pathname = ""; }, 100);
+        
     }catch (error){
         console.error("An Error Occured");
         document.getElementById('signUp-email').style.borderColor = "#ff0000";

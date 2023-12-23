@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
-import { getDatabase, ref, child, push, set } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+import { getDatabase, ref, child, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
@@ -92,6 +92,27 @@ onAuthStateChanged(auth, (user) => {
       window.sessionStorage.setItem("last_path", window.location.pathname);
       window.location.pathname = "login/index.html";
     }
+
+    const dbref = ref(database, "/user_data/" + user.uid + "/root/");
+    onValue(dbref, (snapshot) => {
+      const data = snapshot.val();
+
+      const entries = [];
+      for (const key in data) {
+        entries.push(key); 
+      }
+      //console.log(entries);
+      for (var i = 0; i < entries.length; i++ ){
+        var category = document.createElement("option");
+        category.setAttribute("value", entries[i]);
+        category.innerText = entries[i].charAt(0).toUpperCase() + entries[i].slice(1);
+        document.getElementById('cat-root-fld').appendChild(category);
+      }
+      var Add_Cat_Category = document.createElement("option");
+      Add_Cat_Category.setAttribute("value", "add_new");
+      Add_Cat_Category.innerText = "Add New";
+      document.getElementById('cat-root-fld').appendChild(Add_Cat_Category);
+    });
 });
 
 

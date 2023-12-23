@@ -63,7 +63,7 @@ onAuthStateChanged(auth, (user) => {
 
 const usernameSearch = async () => {
 
-    const search_term = document.getElementById('username_fld').value;
+    const search_term = document.getElementById('username_fld').value.toLowerCase();
 
     const dbref = ref(database, "/user_index/");
     onValue(dbref, (snapshot) => {
@@ -83,7 +83,7 @@ const usernameSearch = async () => {
             const attr = [];
       
             for (let [key, value] of Object.entries(entries[key2].dataf)) {
-                if(key == "username" && value.includes(search_term)){
+                if(key == "username" && value.toString().toLowerCase().includes(search_term)){
                     attr.push(value);
                 }
             }
@@ -111,19 +111,25 @@ const usernameSearch = async () => {
                   attr_spec.push(entries[0].dataf);
                   attr_spec.push(entries[1].dataf);
                   attr_spec.push(entries[2].dataf);
+                  attr_spec.push(entries[3].dataf);
+
                 });
-                //0. profile_img
-                //1. uid
-                //2. username
+                //0. premium
+                //1. profile_img
+                //2. uid
+                //3. username
 
 
 
                 var results_template = document.createElement("div");
                 results_template.classList.add("search_res");
-                results_template.setAttribute('onclick','window.location.pathname = ' + "'/user/" + attr_spec[1] + "'");
+                results_template.setAttribute('onclick','window.location.pathname = ' + "'/user/" + attr_spec[2] + "'");
 
                 var profile_img = document.createElement("img");
-                profile_img.setAttribute("src", attr_spec[0]);
+                if(attr_spec[1] == "none"){
+                    attr_spec[1] = "/icons/account.png";
+                }
+                profile_img.setAttribute("src", attr_spec[1]);
                 profile_img.style.width = "90px";
                 profile_img.style.height = "90px";
 
@@ -153,11 +159,9 @@ const usernameSearch = async () => {
 
 window.onload = () => {
     if(window.innerWidth <= 1130){
-        console.log("Mobile Mode", window.screen.width);
         document.getElementById('account_btns').style.display = "none";
         document.getElementById('hamburger-menu').style.display = "block";
     }else{
-        console.log("Computer Mode", window.screen.width);
         document.getElementById('account_btns').style.display = "block";
         document.getElementById('hamburger-menu').style.display = "none";
     }

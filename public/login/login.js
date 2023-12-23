@@ -44,9 +44,7 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       console.log("Logged In", uid);
-      if(window.sessionStorage.getItem("last_path") != null){
-        window.location.pathname = window.sessionStorage.getItem('last_path');
-      }
+      window.location.pathname = "";
     } else {
       console.log("Logged Out");
     }

@@ -32,9 +32,13 @@ const resetPassword = async () => {
 
     try {
         const userCredential = await sendPasswordResetEmail(auth, loginEmail);
-        
+        document.getElementById('error_display').innerText = "Email sent if you don't see it check the \"junk mail\" folder";
+        document.getElementById('error_display').style.color = "#00ff00";
+        document.getElementById('error_display').style.display = "block";
     }catch (error){
-        console.error("An Error Occured", error);
+        document.getElementById('error_display').value = "An Error Occured, Try Again Later"
+        document.getElementById('error_display').style.color = "#ff0000";
+        document.getElementById('error_display').style.display = "block";
     }
 }
 

@@ -3,6 +3,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app-check.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-performance.js"
+import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
 
 function getBaseUrl(url) {
   var parser = document.createElement('a');
@@ -10,6 +11,7 @@ function getBaseUrl(url) {
 
   return parser.hostname;
 }
+
 
 // Match the regular expression against the URL.
 let page_url = window.location.pathname;
@@ -36,10 +38,28 @@ window.onload = () => {
   const analytics = getAnalytics(app);
   const database = getDatabase(app);
   const perf = getPerformance(app);
+  const auth = getAuth(app);
   const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
     isTokenAutoRefreshEnabled: true
   });
+
+  var editmode = false;
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) { //Logged In
+        const user_uid = user.uid;
+        if (user_uid == uid){ //Enable Edit Mode
+          editmode = true;
+        }else{
+          editmode = false;
+        }
+    }else{ //Logged Out
+        editmode = false;
+    }
+  });
+
+ 
 
   
   const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
@@ -66,7 +86,7 @@ window.onload = () => {
       //1. link
       //2. price
       //3. name
-  
+      
   
           
       var template = document.createElement("div");
@@ -74,11 +94,19 @@ window.onload = () => {
 
       var divTn = document.createElement("div");
       divTn.classList.add("tn-container");
-      divTn.setAttribute("onClick", "window.location = '" + attr[1] + "';");
+      //divTn.setAttribute("onClick", "window.location = '" + attr[1] + "';");
 
       var img = document.createElement("img");
       img.setAttribute("src", attr[0]);
       img.classList.add("folder-tn");
+      if(editmode = true){
+        var delete_btn = document.createElement("img");
+        delete_btn.classList.add("delete_icon");
+        delete_btn.setAttribute("src", "/img/icons/delete.png");
+        delete_btn.setAttribute("id", attr[1]);
+        template.appendChild(delete_btn);
+      }
+      
 
       var name = document.createElement("h1");
       var name_text = document.createTextNode(attr[3]);
@@ -105,6 +133,10 @@ window.onload = () => {
         console.error("ERRoR: element is equal to null");
       }
     }
+  });
+
+  document.getElementsByClassName('mainTitle').addEventListener("click", (event) => {
+    console.log("DELETE ITEM");
   });
 };
 
