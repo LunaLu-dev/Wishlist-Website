@@ -14,6 +14,10 @@
       {
         "source": "/user/*",
         "destination": "/user/index.html"
+      },
+      {
+        "source": "/user/*/settings",
+        "destination": "/settings/index.html"
       }
     ]
   },

@@ -46,7 +46,7 @@ window.onload = () => {
 
   var editmode = false;
 
-  onAuthStateChanged(auth, (user) => {
+  /*onAuthStateChanged(auth, (user) => {
     if (user) { //Logged In
         const user_uid = user.uid;
         if (user_uid == uid){ //Enable Edit Mode
@@ -57,7 +57,7 @@ window.onload = () => {
     }else{ //Logged Out
         editmode = false;
     }
-  });
+  });*/
 
  
 

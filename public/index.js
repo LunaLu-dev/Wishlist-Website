@@ -138,27 +138,19 @@ const usernameSearch = async () => {
                 results_template.setAttribute('onclick','window.location.pathname = ' + "'/user/" + v_uid + "'");
 
                 var profile_img = document.createElement("img");
-                if(v_profile_img == ""){
-
-                    profile_img.setAttribute("src", "/img/icons/account.png");
-                    
-                }else if (v_premium == true && v_firepfp == true){
+                if (v_premium == true && v_firepfp == true){
 
                     getDownloadURL(storageRef(storage, attr_spec[2] + "/profile.png"))
                     .then((url) => {
                       profile_img.setAttribute("src", url);
                     })
                     .catch((error) => {
-                      // Handle any errors
-                      console.error("AN ERROR OCCURED", error);
+                      console.error("Error Could Not Load Profile Picture From Firebase");
                     });
 
                 }else{
-
                     profile_img.setAttribute("src", v_profile_img);
-
                 }
-                //profile_img.setAttribute("src", attr_spec[1]);
                 profile_img.style.width = "90px";
                 profile_img.style.height = "90px";
 
