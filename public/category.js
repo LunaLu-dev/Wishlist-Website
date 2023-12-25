@@ -21,32 +21,33 @@ var page_url_split = page_url.split("/");
 var uid = page_url_split[2];
 var category = page_url_split[3];
 
+const firebaseConfig = {
+  apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
+  authDomain: "wishlist-website-b0f92.firebaseapp.com",
+  databaseURL: "https://wishlist-website-b0f92-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "wishlist-website-b0f92",
+  storageBucket: "wishlist-website-b0f92.appspot.com",
+  messagingSenderId: "1075962776143",
+  appId: "1:1075962776143:web:a9f688ac1125c7edfcf83a",
+  measurementId: "G-04H8TLJ8EK"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
+const perf = getPerformance(app);
+const auth = getAuth(app);
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
+  isTokenAutoRefreshEnabled: true
+});
+
 window.onload = () => {
-  const firebaseConfig = {
-    apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
-    authDomain: "wishlist-website-b0f92.firebaseapp.com",
-    databaseURL: "https://wishlist-website-b0f92-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "wishlist-website-b0f92",
-    storageBucket: "wishlist-website-b0f92.appspot.com",
-    messagingSenderId: "1075962776143",
-    appId: "1:1075962776143:web:a9f688ac1125c7edfcf83a",
-    measurementId: "G-04H8TLJ8EK"
-  };
-  
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const database = getDatabase(app);
-  const perf = getPerformance(app);
-  const auth = getAuth(app);
-  const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider('6Lcn0e0oAAAAAF0WmoPVhQfTElJed3RaSEjTMdeY'),
-    isTokenAutoRefreshEnabled: true
-  });
 
   var editmode = false;
 
-  /*onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, (user) => {
     if (user) { //Logged In
         const user_uid = user.uid;
         if (user_uid == uid){ //Enable Edit Mode
@@ -57,7 +58,7 @@ window.onload = () => {
     }else{ //Logged Out
         editmode = false;
     }
-  });*/
+  });
 
  
 
@@ -82,10 +83,11 @@ window.onload = () => {
       for (let [key, value] of Object.entries(entries[key2].dataf)) {
         attr.push(value);
       }
-      //0. img
-      //1. link
-      //2. price
-      //3. name
+
+      const img_v = attr[0];
+      const link_v = attr[1];
+      const price_v = attr[2];
+      const name_v = attr[3];
       
   
           
@@ -94,30 +96,30 @@ window.onload = () => {
 
       var divTn = document.createElement("div");
       divTn.classList.add("tn-container");
-      //divTn.setAttribute("onClick", "window.location = '" + attr[1] + "';");
+      divTn.setAttribute("onClick", "window.location = '" + link_v + "';");
 
       var img = document.createElement("img");
-      img.setAttribute("src", attr[0]);
+      img.setAttribute("src", img_v);
       img.classList.add("folder-tn");
-      if(editmode = true){
+      if(editmode == true){
         var delete_btn = document.createElement("img");
         delete_btn.classList.add("delete_icon");
         delete_btn.setAttribute("src", "/img/icons/delete.png");
-        delete_btn.setAttribute("id", attr[1]);
+        delete_btn.setAttribute("id", link_v);
         template.appendChild(delete_btn);
       }
       
 
       var name = document.createElement("h1");
-      var name_text = document.createTextNode(attr[3]);
+      var name_text = document.createTextNode(name_v);
       name.appendChild(name_text);
 
       var price = document.createElement("h3");
-      var price_text = document.createTextNode(attr[2]);
+      var price_text = document.createTextNode(price_v);
       price.appendChild(price_text);
 
       var src_url = document.createElement("h5");
-      var src_url_text = document.createTextNode(getBaseUrl(attr[1]));
+      var src_url_text = document.createTextNode(getBaseUrl(link_v));
       src_url.appendChild(src_url_text);
   
       divTn.appendChild(img);
@@ -132,12 +134,15 @@ window.onload = () => {
       }else{
         console.error("ERRoR: element is equal to null");
       }
+
+      document.getElementById('text').addEventListener("click", (event) => {
+        console.log("DELETE ITEM", );
+      });
+      
     }
   });
 
-  document.getElementsByClassName('mainTitle').addEventListener("click", (event) => {
-    console.log("DELETE ITEM");
-  });
+  
 };
 
 /*
