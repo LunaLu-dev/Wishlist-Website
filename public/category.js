@@ -101,13 +101,13 @@ window.onload = () => {
       var img = document.createElement("img");
       img.setAttribute("src", img_v);
       img.classList.add("folder-tn");
-      if(editmode == true){
-        var delete_btn = document.createElement("img");
-        delete_btn.classList.add("delete_icon");
-        delete_btn.setAttribute("src", "/img/icons/delete.png");
-        delete_btn.setAttribute("id", link_v);
-        template.appendChild(delete_btn);
-      }
+      //if(editmode == true){
+      //  var delete_btn = document.createElement("img");
+      //  delete_btn.classList.add("delete_icon");
+      //  delete_btn.setAttribute("src", "/img/icons/delete.png");
+      //  delete_btn.setAttribute("id", link_v);
+      //  template.appendChild(delete_btn);
+      //}
       
 
       var name = document.createElement("h1");
@@ -134,10 +134,6 @@ window.onload = () => {
       }else{
         console.error("ERRoR: element is equal to null");
       }
-
-      document.getElementById('text').addEventListener("click", (event) => {
-        console.log("DELETE ITEM", );
-      });
       
     }
   });
