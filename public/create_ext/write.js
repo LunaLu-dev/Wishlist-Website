@@ -68,12 +68,19 @@ onAuthStateChanged(auth, async (user) => {
 
     let selectedCategory = document.getElementById("cat-root-fld").value;
 
-    if(document.getElementById("cat-root-fld").value == "create" && document.getElementById("coustom-root-fld").value == ""){
+    if(
+      document.getElementById("cat-root-fld").value == "create" && document.getElementById("coustom-root-fld").value == ""){
       document.getElementById("coustom-root-fld").style.borderColor = "#ff0000";
       document.getElementById("save-button").style.backgroundColor = "#ff0000";
       alert("Please Ender The Category Title");
       return;
     }else if(document.getElementById("coustom-root-fld").value != ""){
+
+      if(categories.indexOf(document.getElementById("coustom-root-fld").value) > -1 || document.getElementById("coustom-root-fld").value == "Create" || document.getElementById("coustom-root-fld").value == "category"){
+        alert("Category already exists");
+        return;
+      }
+
       categories.push(document.getElementById("coustom-root-fld").value)
       await updateDoc(doc(firestore, "users", user.uid), {
         categories: categories
@@ -85,6 +92,7 @@ onAuthStateChanged(auth, async (user) => {
       img: document.getElementById("img-root-fld").value,
       link: document.getElementById("link-root-fld").value,
       price: document.getElementById("price-root-fld").value,
+      currency: document.getElementById("currency-root-fld").value,
       title: document.getElementById("name-root-fld").value
     });
 
@@ -95,6 +103,8 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById("link-root-fld").value = "";
     document.getElementById("cat-root-fld").value = "category";
     document.getElementById("coustom-root-fld").value = "";
+    document.getElementById("coustom-root-fld").style.display = "none";
+    window.location.reload();
 
   });
 });
