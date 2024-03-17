@@ -1,9 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getDatabase, ref, child, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app-check.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-performance.js"
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+import { getFirestore, addDoc, doc, getDoc, updateDoc, collection } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -17,7 +17,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const firestore = getFirestore(app);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const perf = getPerformance(app);
@@ -26,118 +26,88 @@ const appCheck = initializeAppCheck(app, {
   isTokenAutoRefreshEnabled: true
 });
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.sessionStorage.setItem("redirect_url", window.location.pathname);
+    window.location.pathname = "/login";
+    return;
+  }
 
-      window.sessionStorage.removeItem("last_path");
-      
+  window.sessionStorage.clear();
 
-      if(localStorage.getItem("img") != ""){ 
-        document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
-      }
-    
-        document.getElementById('save-button').addEventListener('click', () => {
-    
-          if(document.getElementById("cat-root-fld").value == "category"){
-            
-            document.getElementById('save-button').style.backgroundColor = "#ff0000";
-            document.getElementById('cat-root-fld').style.borderBlockColor = "#ff0000";
-    
-          }else{
-    
-            if(document.getElementById("cat-root-fld").value == 'add_new'){
-              const newPostKey = push(child(ref(database), "/user_data/" + uid + "/category/" + document.getElementById("cat-root-fld").value)).key;
-        
-              set(ref(database, "user_data/" + uid + '/root/' + newPostKey), {
-                img: document.getElementById('img-root-fld').value,
-                title: document.getElementById('coustom-root-fld').value,
-                link: document.getElementById('coustom-root-fld').value.toLowerCase().replaceAll(" ", "_")
-              });
-    
-              //Gets the key for new push
-              const newPostKey2 = push(child(ref(database), "/user_data/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
-    
-              set(ref(database, "user_data/" + uid +'/category/' + document.getElementById("coustom-root-fld").value + '/' + newPostKey2), {
-                img: document.getElementById('img-root-fld').value,
-                title: document.getElementById('name-root-fld').value,
-                price: document.getElementById('price-root-fld').value,
-                link: document.getElementById('link-root-fld').value
-              });
-    
-    
-            }else{
-              //Gets the key for new push
-              const newPostKey = push(child(ref(database), "/user_data/"+ uid +"/category/" + document.getElementById("cat-root-fld").value)).key;
-        
-              set(ref(database, "user_data/" + uid +'/category/' + document.getElementById("cat-root-fld").value + '/' + newPostKey), {
-                img: document.getElementById('img-root-fld').value,
-                title: document.getElementById('name-root-fld').value,
-                price: document.getElementById('price-root-fld').value,
-                link: document.getElementById('link-root-fld').value
-              });
-            }
-            console.log("DATABASE UPDATED");
-            //clears auto saved values after submit
-            localStorage.removeItem("img");
-            localStorage.removeItem("name");
-            localStorage.removeItem("price");
-            localStorage.removeItem("link");
-            
-          }
-        });
-    }else{
-      // User is signed out
-      console.log("logged Out");
-      window.sessionStorage.setItem("last_path", window.location.pathname);
-      window.location.pathname = "login/index.html";
+  const user_doc = await getDoc(doc(firestore, "users", user.uid))
+
+  const categories = user_doc.data().categories;
+
+  categories.forEach( cat => {
+    const category_template = document.createElement("option");
+    category_template.value = cat;
+    category_template.innerText = cat;
+
+    document.getElementById("cat-root-fld").appendChild(category_template);
+  });
+
+  const category_template = document.createElement("option");
+  category_template.value = "Create";
+  category_template.innerText = "Add Category";
+
+  document.getElementById("cat-root-fld").appendChild(category_template);
+
+  document.getElementById('save-button').addEventListener('click', async () => {
+    if(
+      document.getElementById("img-root-fld").value == "" || 
+      document.getElementById("name-root-fld").value == "" || 
+      document.getElementById("price-root-fld").value == "" || 
+      document.getElementById("link-root-fld").value == ""||
+      document.getElementById("cat-root-fld").value == "category"
+    ){
+      document.getElementById('save-button').style.backgroundColor = "#ff0000";
+      alert("Plese Fill In all Requred Fields");
+      return;
     }
 
-    const dbref = ref(database, "/user_data/" + user.uid + "/root/");
-    onValue(dbref, (snapshot) => {
-      const data = snapshot.val();
+    let selectedCategory = document.getElementById("cat-root-fld").value;
 
-      const entries = [];
-      for (const key in data) {
-        entries.push(key); 
-      }
-      for (var i = 0; i < entries.length; i++ ){
-        var category = document.createElement("option");
-        category.setAttribute("value", entries[i]);
-        category.innerText = entries[i].charAt(0).toUpperCase() + entries[i].slice(1);
-        document.getElementById('cat-root-fld').appendChild(category);
-      }
-      var Add_Cat_Category = document.createElement("option");
-      Add_Cat_Category.setAttribute("value", "add_new");
-      Add_Cat_Category.innerText = "Add New";
-      document.getElementById('cat-root-fld').appendChild(Add_Cat_Category);
+    if(document.getElementById("cat-root-fld").value == "create" && document.getElementById("coustom-root-fld").value == ""){
+      document.getElementById("coustom-root-fld").style.borderColor = "#ff0000";
+      document.getElementById("save-button").style.backgroundColor = "#ff0000";
+      alert("Please Ender The Category Title");
+      return;
+    }else if(document.getElementById("coustom-root-fld").value != ""){
+      categories.push(document.getElementById("coustom-root-fld").value)
+      await updateDoc(doc(firestore, "users", user.uid), {
+        categories: categories
+      });
+      selectedCategory = document.getElementById("coustom-root-fld").value;
+    }
+
+    await addDoc(collection(firestore, "users", user.uid, selectedCategory), {
+      img: document.getElementById("img-root-fld").value,
+      link: document.getElementById("link-root-fld").value,
+      price: document.getElementById("price-root-fld").value,
+      title: document.getElementById("name-root-fld").value
     });
+
+    //Resets Form
+    document.getElementById("img-root-fld").value = "";
+    document.getElementById("name-root-fld").value = "";
+    document.getElementById("price-root-fld").value = "";
+    document.getElementById("link-root-fld").value = "";
+    document.getElementById("cat-root-fld").value = "category";
+    document.getElementById("coustom-root-fld").value = "";
+
+  });
 });
 
+document.getElementById("cat-root-fld").addEventListener("change", () => {
+  if(document.getElementById("cat-root-fld").value != "Create"){
+    document.getElementById("coustom-root-fld").style.display = "none";
+    document.getElementById("coustom-root-fld").value = "";
+    return;
+  }
+  document.getElementById("coustom-root-fld").style.display = "block";
+});
 
-document.getElementById('img-root-fld').addEventListener('change', () => {
-    document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
-    localStorage.setItem("img", document.getElementById("img-root-fld").value);
-});
-document.getElementById('name-root-fld').addEventListener('change', () => {
-    localStorage.setItem("name", document.getElementById("name-root-fld").value);
-});
-document.getElementById('price-root-fld').addEventListener('change', () => {
-    localStorage.setItem("price", document.getElementById("price-root-fld").value);
-});
-document.getElementById('link-root-fld').addEventListener('change', () => {
-    localStorage.setItem("link", document.getElementById("link-root-fld").value);
-});
-document.getElementById('cat-root-fld').addEventListener('change', () => {
-    localStorage.setItem("category", document.getElementById("cat-root-fld").value);
-    if(document.getElementById('cat-root-fld').value == "add_new"){
-      document.getElementById('coustom-root-fld').style.display = "block";
-    }else{
-      document.getElementById('coustom-root-fld').style.display = "none";
-    }
-
-    if(document.getElementById('cat-root-fld') != "category"){
-      document.getElementById('save-button').style.backgroundColor = "#1181d1";
-      document.getElementById('cat-root-fld').style.borderBlockColor = "#000000";
-    }
+document.getElementById("img-root-fld").addEventListener("change", () => {
+  document.getElementById('preview-root-img').src = document.getElementById("img-root-fld").value;
 });

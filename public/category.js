@@ -1,9 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app-check.js";
-import { getPerformance } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-performance.js"
-import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+//import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
+import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js"
+import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
 
 function getBaseUrl(url) {
   var parser = document.createElement('a');
@@ -35,7 +36,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const database = getDatabase(app);
+//const database = getDatabase(app);
+const firestore = getFirestore(app)
 const perf = getPerformance(app);
 const auth = getAuth(app);
 const appCheck = initializeAppCheck(app, {
@@ -60,10 +62,13 @@ window.onload = () => {
     }
   });
 
+
+  //const dbref = ref()
+
  
 
   
-  const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
+  /*const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
   onValue(dbref, (snapshot) => {
     const data = snapshot.val();
   
@@ -136,7 +141,7 @@ window.onload = () => {
       }
       
     }
-  });
+  });*/
 
   
 };
