@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js";
 import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
-const database = getDatabase(app);
+const firestore = getFirestore(app);
 const storage = getStorage(app);
 const perf = getPerformance(app);
 const appCheck = initializeAppCheck(app, {
@@ -52,28 +52,17 @@ const signUpEmailPassword = async () => {
           console.log("Verification Email Sent");
           });
     
-        onValue(dbref, (snapshot) => {
-          const data = snapshot.val();
-          if (data == null){
-            set(ref(database, "user_index/" + signUpUsername), {
-                firepfp: false,
-                premium: false,
-                profile_img: signUpPfp,
-                uid: userCredential.user.uid,
-                username: signUpUsername
-            });
-          }else{
-            document.getElementById('signUp-username').style.borderColor = "#ff0000";
-            document.getElementById('create_account_btn').style.borderColor = "#ff0000";
-            document.getElementById('error_display').innerText = "Username Taken :(";
-            document.getElementById('error_display').style.display = "block";
-          }
-        });
+          await setDoc(doc(firestore, "users", userCredential.user.uid), {
+            firepfp: false,
+            premium: false,
+            profile_img: signUpPfp,
+            uid: userCredential.user.uid,
+            username: signUpUsername
+          })
 
         setTimeout(() => { window.location.pathname = ""; }, 100);
         
     }catch (error){
-        console.error("An Error Occured ", error);
         document.getElementById('signUp-email').style.borderColor = "#ff0000";
         document.getElementById('signUp-password').style.borderColor = "#ff0000";
     }

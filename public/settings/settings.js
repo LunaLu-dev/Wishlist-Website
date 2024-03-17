@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js"
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
@@ -20,7 +20,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const database = getDatabase(app);
+const firestore = getFirestore(app);
 const perf = getPerformance(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
@@ -29,89 +29,49 @@ const appCheck = initializeAppCheck(app, {
   isTokenAutoRefreshEnabled: true
 });
 
-let user = "none";
 
-window.onload = () => {
-  onAuthStateChanged(auth, (user_v) => {
-      if (user_v != null){
-        user = user_v;
-        afterAuth();
-      }
-  });
-}
+onAuthStateChanged(auth, async (user) => {
+  if (!user){
+    window.sessionStorage.setItem("redirect_url", window.location.pathname);
+    window.location.pathname = "/login";
+    return;
+  }
 
-function afterAuth(){
+  //Getting Current Settings
+  const currentSettings = await getDoc(doc(firestore, "users", user.uid));
 
-  var firepfp;
-  var premium;
-  var profile_img;
-  var uid;
-  var username;
+  document.getElementById('username_fld').setAttribute('value', currentSettings.data().username);
 
+  if (currentSettings.data().premium == true){
+    document.getElementById('premium_status').style.color = "#00ff00";
+    document.getElementById('premium_status').innerText = "Active";
+  }else{
+    document.getElementById('premium_status').style.color = "#ff0000";
+    document.getElementById('premium_status').innerText = "Not Active";
+  }
 
-  //Getting Current User Setings For loggen in user
-  const dbref = ref(database,"user_account/" + user.uid);
-  onValue(dbref, (snapshot) => {
-    const data = snapshot.val();
-  
-    const entries = [];
-    for (const key in data) {
-        entries.push(data[key]);
-    }
-
-    firepfp = entries[0];
-    premium = entries[1];
-    profile_img = entries[2];
-    uid = entries[3];
-    username = entries[4];
-                
-                
-    document.getElementById('username_fld').setAttribute('value', username);
-    if (premium == true){
-        document.getElementById('premium_status').style.color = "#00ff00";
-        document.getElementById('premium_status').innerText = "Active";
-    }else{
-        document.getElementById('premium_status').style.color = "#ff0000";
-        document.getElementById('premium_status').innerText = "Not Active";
-    }
-  });
-
-
-
-
-  //Upload Profile Image
+  //Upload Coustome Profile Image
   document.getElementById('upload-btn').addEventListener("click", (event) => {
-    
     // Get the selected file from the upload input field
     const file = document.getElementById('upload-file').files[0];
 
-    if(file != undefined){
-      if (premium == true){
-        const storageRef_v = storageRef(storage, 'users/' + user.uid + '/profile.png');
-
-        uploadBytes(storageRef_v, file).then((snapshot) => {
-          console.log("File Successfully Uploaded");
-          document.getElementById('status_span').style.color = "#00ff00";
-          document.getElementById('status_span').innerText = "File Uploaded Successfully";
-          document.getElementById('status_span').style.display = "block";
-        });
-      }else{
-        document.getElementById('status_span').style.color = "#ff0000";
-        document.getElementById('status_span').innerText = "You Need To Be Premium For This Feature";
-        document.getElementById('status_span').style.display = "block";
-      }
-    }else{
-      console.error("No File Selected");
-      document.getElementById('status_span').style.color = "#ff0000";
-      document.getElementById('status_span').innerText = "You Need To Select A file to upload first";
-      document.getElementById('status_span').style.display = "block";
+    if(file == undefined || premium == false){
+      alert("An error occured, Please Try agin later");
+      return;
     }
-  });
-    
+    const storageRef_v = storageRef(storage, 'users/' + user.uid + '/profile.png');
 
-
-  //Close Settings
-  document.getElementById('settings_btn').addEventListener("click", (event) => {
-    window.location.pathname = window.location.pathname.replace("/settings", "");
+    uploadBytes(storageRef_v, file).then((snapshot) => {
+      console.log("File Successfully Uploaded");
+      document.getElementById('status_span').style.color = "#00ff00";
+      document.getElementById('status_span').innerText = "File Uploaded Successfully";
+      document.getElementById('status_span').style.display = "block";
+    });
   });
-}
+  
+});
+
+//Close Settings
+document.getElementById('settings_btn').addEventListener("click", (event) => {
+  window.location.pathname = window.location.pathname.replace("/settings", "");
+});
