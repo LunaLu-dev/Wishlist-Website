@@ -41,8 +41,8 @@ onAuthStateChanged(auth, async (user) => {
 
   categories.forEach( cat => {
     const category_template = document.createElement("option");
-    category_template.value = cat;
-    category_template.innerText = cat;
+    category_template.value = cat.name;
+    category_template.innerText = cat.name;
 
     document.getElementById("cat-root-fld").appendChild(category_template);
   });
@@ -81,7 +81,10 @@ onAuthStateChanged(auth, async (user) => {
         return;
       }
 
-      categories.push(document.getElementById("coustom-root-fld").value)
+      categories.push({
+        img: document.getElementById('coustom-root-fld-img').value,
+        name: document.getElementById('coustom-root-fld').value
+      })
       await updateDoc(doc(firestore, "users", user.uid), {
         categories: categories
       });
@@ -91,7 +94,7 @@ onAuthStateChanged(auth, async (user) => {
     await addDoc(collection(firestore, "users", user.uid, selectedCategory), {
       img: document.getElementById("img-root-fld").value,
       link: document.getElementById("link-root-fld").value,
-      price: document.getElementById("price-root-fld").value,
+      price: parseFloat(document.getElementById("price-root-fld").value),
       currency: document.getElementById("currency-root-fld").value,
       title: document.getElementById("name-root-fld").value
     });
@@ -111,11 +114,17 @@ onAuthStateChanged(auth, async (user) => {
 
 document.getElementById("cat-root-fld").addEventListener("change", () => {
   if(document.getElementById("cat-root-fld").value != "Create"){
+
     document.getElementById("coustom-root-fld").style.display = "none";
     document.getElementById("coustom-root-fld").value = "";
+
+    document.getElementById("coustom-root-fld-img").style.display = "none";
+    document.getElementById("coustom-root-fld-img").value = "";
+
     return;
   }
   document.getElementById("coustom-root-fld").style.display = "block";
+  document.getElementById("coustom-root-fld-img").style.display = "block";
 });
 
 document.getElementById("img-root-fld").addEventListener("change", () => {

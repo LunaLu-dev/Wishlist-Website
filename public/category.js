@@ -1,26 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-//import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js"
 import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
-
-function getBaseUrl(url) {
-  var parser = document.createElement('a');
-  parser.href = url;
-
-  return parser.hostname;
-}
-
-
-// Match the regular expression against the URL.
-let page_url = window.location.pathname;
-var page_url_split = page_url.split("/");
-
-// Get the matched strings.
-var uid = page_url_split[2];
-var category = page_url_split[3];
 
 const firebaseConfig = {
   apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
@@ -36,7 +19,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-//const database = getDatabase(app);
 const firestore = getFirestore(app)
 const perf = getPerformance(app);
 const auth = getAuth(app);
@@ -45,105 +27,79 @@ const appCheck = initializeAppCheck(app, {
   isTokenAutoRefreshEnabled: true
 });
 
-window.onload = () => {
+function getBaseUrl(url) {
+  let parser = document.createElement('a');
+  parser.href = url;
 
-  var editmode = false;
+  return parser.hostname;
+}
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) { //Logged In
-        const user_uid = user.uid;
-        if (user_uid == uid){ //Enable Edit Mode
-          editmode = true;
-        }else{
-          editmode = false;
-        }
-    }else{ //Logged Out
-        editmode = false;
+let page_url = window.location.pathname;
+let page_url_split = page_url.split("/");
+
+// Get the matched strings.
+let uid = page_url_split[2];
+let category = page_url_split[3];
+let editmode = false;
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    if (user.uid == uid){ //Enable Edit Mode
+      //editmode = true;
+    }
+  }
+});
+
+window.onload = async () => {
+  const q = query(collection(firestore, "users", uid, category));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+
+    let template = document.createElement("div");
+    template.classList.add("template-div");
+
+    let divTn = document.createElement("div");
+    divTn.classList.add("tn-container");
+    divTn.setAttribute("onClick", "window.location = '" + doc.data().link + "';");
+
+    let img = document.createElement("img");
+    img.setAttribute("src", doc.data().img);
+    img.classList.add("folder-tn");
+
+    if(editmode == true){
+      let delete_btn = document.createElement("img");
+      delete_btn.classList.add("delete_icon");
+      delete_btn.setAttribute("src", "/img/icons/delete.png");
+      delete_btn.setAttribute("id", doc.data().link);
+      template.appendChild(delete_btn);
+    }
+
+    let name = document.createElement("h1");
+    let name_text = document.createTextNode(doc.data().title);
+    name.appendChild(name_text);
+
+    let price = document.createElement("h3");
+    let price_text = document.createTextNode(doc.data().price + " " + doc.data().currency);
+    price.appendChild(price_text);
+
+    let src_url = document.createElement("h5");
+    let src_url_text = document.createTextNode(getBaseUrl(doc.data().link));
+    src_url.appendChild(src_url_text);
+
+    divTn.appendChild(img);
+    template.appendChild(divTn);
+    template.appendChild(name);
+    template.appendChild(price);
+    template.appendChild(src_url);
+
+    let element = document.getElementById("root-folder-bundle-div");
+    if (element != null){
+      element.appendChild(template); 
+    }else{
+      console.error("ERRoR: Root folder does not exist");
     }
   });
-
-
-  //const dbref = ref()
-
- 
-
-  
-  /*const dbref = ref(database, "/user_data/" + uid + "/category/" + category);
-  onValue(dbref, (snapshot) => {
-    const data = snapshot.val();
-  
-    const entries = [];
-    for (const key in data) {
-      const entry = {
-        namef: key,
-        dataf: data[key]
-      };
-      entries.push(entry);
-    }
-  
-    for(const key2 in entries){
-  
-      const attr = [];
-        
-      for (let [key, value] of Object.entries(entries[key2].dataf)) {
-        attr.push(value);
-      }
-
-      const img_v = attr[0];
-      const link_v = attr[1];
-      const price_v = attr[2];
-      const name_v = attr[3];
-      
-  
-          
-      var template = document.createElement("div");
-      template.classList.add("template-div");
-
-      var divTn = document.createElement("div");
-      divTn.classList.add("tn-container");
-      divTn.setAttribute("onClick", "window.location = '" + link_v + "';");
-
-      var img = document.createElement("img");
-      img.setAttribute("src", img_v);
-      img.classList.add("folder-tn");
-      //if(editmode == true){
-      //  var delete_btn = document.createElement("img");
-      //  delete_btn.classList.add("delete_icon");
-      //  delete_btn.setAttribute("src", "/img/icons/delete.png");
-      //  delete_btn.setAttribute("id", link_v);
-      //  template.appendChild(delete_btn);
-      //}
-      
-
-      var name = document.createElement("h1");
-      var name_text = document.createTextNode(name_v);
-      name.appendChild(name_text);
-
-      var price = document.createElement("h3");
-      var price_text = document.createTextNode(price_v);
-      price.appendChild(price_text);
-
-      var src_url = document.createElement("h5");
-      var src_url_text = document.createTextNode(getBaseUrl(link_v));
-      src_url.appendChild(src_url_text);
-  
-      divTn.appendChild(img);
-      template.appendChild(divTn);
-      template.appendChild(name);
-      template.appendChild(price);
-      template.appendChild(src_url);
-
-      var element = document.getElementById("root-folder-bundle-div");
-      if (element != null){
-        element.appendChild(template); 
-      }else{
-        console.error("ERRoR: element is equal to null");
-      }
-      
-    }
-  });*/
-
-  
 };
 
 /*
