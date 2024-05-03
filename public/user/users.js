@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app-check.js";
 import { getPerformance } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-performance.js"
@@ -45,7 +44,12 @@ window.onload = async () => {
 
       var divTn = document.createElement("div");
       divTn.classList.add("tn-container");
-      divTn.setAttribute("onClick", "window.location.pathname = 'category/" + uid + "/"  + userDocSnap.data().categories[i].name + "';");
+      if(userDocSnap.data().categories[i].external == true){
+        divTn.setAttribute("onClick", "window.location.href = '" + userDocSnap.data().categories[i].externalLink + "';");
+      }else{
+        divTn.setAttribute("onClick", "window.location.pathname = 'category/" + uid + "/"  + userDocSnap.data().categories[i].name + "';");
+      }
+      
 
       var img = document.createElement("img");
       img.setAttribute("src", userDocSnap.data().categories[i].img);
