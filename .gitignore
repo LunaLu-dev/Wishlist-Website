@@ -67,3 +67,5 @@ node_modules/
 
 # Diverse Keys
 secrets/
+
+.idea
