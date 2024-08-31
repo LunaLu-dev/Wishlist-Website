@@ -8,14 +8,7 @@ import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/
 
 window.onload = () => {
   const firebaseConfig = {
-    apiKey: "AIzaSyD-21i_c71ZztSOOAVHg2Y2REK3031UzGM",
-    authDomain: "wishlist-website-b0f92.firebaseapp.com",
-    databaseURL: "https://wishlist-website-b0f92-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "wishlist-website-b0f92",
-    storageBucket: "wishlist-website-b0f92.appspot.com",
-    messagingSenderId: "1075962776143",
-    appId: "1:1075962776143:web:a9f688ac1125c7edfcf83a",
-    measurementId: "G-04H8TLJ8EK"
+    /*API KEYS*/
   };
   
   // Initialize Firebase
