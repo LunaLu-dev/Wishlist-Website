@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="login.css">
-        <title>wishlist</title>
-        <link rel="icon" href="/img/white/favicon-white.png">
-        <script defer type="module" src="index.js"></script>
-        <script defer type="text/javascript" src="/global.js"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-      </head>
-    <body>
-      <center>
-        <h1 class="mainTitle" id="mainTitle">WISHLIST</h1>
-        <br>
-        <br>
-        <p>Got no specified link, search you friends username to find their wishlist</p>
-        <br>
-      </center>
-      <div class="container-canvas" style="background-color: #ffffff;">
-        <label for="username" class="login-label" id="usernameLabel">Username</label><br>
-        <input type="text" class="login-fields" id="username_fld"><br><br>
-        <button id="search_btn" class="login-fields2">Search</button>
-        <div id="search_results">
-          
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <title>Wishlist</title>
+    <link rel="icon" href="img/white/favicon-white.png">
+    <script defer type="text/javascript" src="/global.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  </head>
+  <body>
+    <span class="material-symbols-outlined" id="settings_btn" style="display: none;">settings</span>
+    <center>
+      <h1 class="mainTitle" id="mainTitle">Wishlist</h1>
+      <br>
+      <div id="root-folder-bundle-div" class="center" style="display:flex; flex-wrap: wrap;">
+        <div onclick="window.location.href='displate'">
+          <div class="tn-container">
+            <img src="img/categories/displate.jpg" class="folder-tn">
+          </div>
+          <h1>Displate</h1>
+        </div>
+        <div onclick="window.location.href='https://store.steampowered.com/wishlist/profiles/76561198448856727'">
+          <div class="tn-container">
+            <img src="img/categories/steam.webp" class="folder-tn">
+          </div>
+          <h1>Games</h1>
+        </div>
+        <div onclick="window.location.href='https://www.amazon.se/hz/wishlist/ls/1V57KDFW0WERZ/ref=nav_wishlist_lists_3'">
+          <div class="tn-container">
+            <img src="img/categories/tech.png" class="folder-tn">
+          </div>
+          <h1>Tech</h1>
+        </div>
+        <div onclick="window.location.href='https://www.amazon.se/-/en/hz/wishlist/ls/1BH9B44D87FBU?ref_=list_d_wl_lfu_nav_1'">
+          <div class="tn-container">
+            <img src="img/categories/amazon.jpg" class="folder-tn">
+          </div>
+          <h1>Amazon</h1>
+        </div>
+        <div onclick="window.location.href='https://www.prisjakt.nu/list/network-stuff--l2092915'">
+          <div class="tn-container">
+            <img src="img/categories/networking.png" class="folder-tn">
+          </div>
+          <h1>Networking</h1>
         </div>
       </div>
-      <div id="account_btns" style="display: none;">
-        <button id="sign_in_btn" class="index-login-btns" style="right: 220px;" onclick="window.location.pathname = '/login/'">Sign In</button>
-        <button id="sign_up_btn" class="index-login-btns" style="right: 50px;" onclick="window.location.pathname = '/signup/'">Sign Up</button>
-        <button id="sign_out_btn"class="index-login-btns" style="right: 50px;">Sign Out</button>
-      </div>
-      <div id="hamburger-menu" style="display: none;">
-        <div class="menu-btn" id="menu-btn"><span id="menu_btn_arr" style="font-size: 50px;" class="material-symbols-outlined">expand_more</span></div>
-        <div class="menu-content" id="menu-content">
-          <h2 id="login_drop_btn" onclick="window.location.pathname = '/login'">Log In</h2>
-          <h2 id="signup_drop_btn" onclick="window.location.pathname = '/signup'">Sign Up</h2>
-          <h2 id="logout_drop_btn">Log Out</h2>
-        </div>
-      </div>
-    </body>
+    </center>
+  </body>
 </html>
