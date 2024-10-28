@@ -6,10 +6,9 @@ window.onload = async function(){
         await setLocalCurrency().then(r => {
             if (r.length === 3){
                 window.localStorage.setItem("currency", r);
-                console.log("Currency set to: " + r);
                 localCurrency = r;
             }else{
-                console.log("Failed to set localCurrency");
+                console.error("Failed to set localCurrency");
                 localCurrency = "SEK";
             }
         });
@@ -17,32 +16,23 @@ window.onload = async function(){
         localCurrency = window.localStorage.getItem("currency");
     }
 
-    setPrice('displate-1')
-        .then(r => {
-            const id = document.getElementById('displate-1');
-            let price = parseFloat(r);
-            id.innerHTML = price.toLocaleString(navigator.language, { style: 'currency', currency: localCurrency });
-        });
-    setPrice('displate-2')
-        .then(r => {
-            const id = document.getElementById('displate-2');
-            let price = parseFloat(r);
-            id.innerHTML = price.toLocaleString(navigator.language, { style: 'currency', currency: localCurrency });
-        });
-    setPrice('displate-3')
-        .then(r => {
-            const id = document.getElementById('displate-3');
-            let price = parseFloat(r);
-            id.innerHTML = price.toLocaleString(navigator.language, { style: 'currency', currency: localCurrency });
-        });
+    const elements = document.getElementsByClassName("prices");
+
+    for (let i = 0; i < elements.length; i++){
+        setPrice(elements[i])
+            .then(r => {
+                let price = parseFloat(r);
+                elements[i].innerHTML = price.toLocaleString(navigator.language, { style: 'currency', currency: localCurrency });
+            });
+    }
 }
 
-async function setPrice(id){
+async function setPrice(element){
     try{
-        const price = document.getElementById(id).getAttribute("price");
-        const currency = document.getElementById(id).getAttribute("curr");
+        const price = element.getAttribute("price");
+        const currency = element.getAttribute("curr");
 
-        request_builder = "http://api-wishlist.lunalu.org//?amount=" + price + "&from_curr=" + currency + "&to_curr="+ localCurrency;
+        let request_builder = "http://api-wishlist.lunalu.org//?amount=" + price + "&from_curr=" + currency + "&to_curr="+ localCurrency;
 
         const response = await fetch(request_builder, {
             method: 'GET'
@@ -50,9 +40,7 @@ async function setPrice(id){
         if (!response.ok) {
             return "Error";
         }
-        const data = await response.text();
-        console.log(data);
-        return data;
+        return await response.text();
     }
     catch(error){
         console.error("An error occurred while trying to connect to server: ", error);
@@ -69,9 +57,7 @@ async function setLocalCurrency(){
             return "Error";
         }
         const data = await response.text();
-        let json = JSON.parse(data).currency;
-        console.log(json);
-        return json;
+        return JSON.parse(data).currency;
     }
     catch(error){
         console.error("An error occurred trying to get local localCurrency: ", error);
