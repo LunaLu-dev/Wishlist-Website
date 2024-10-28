@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="../index.css">
     <title>Wishlist</title>
     <link rel="icon" href="../img/white/favicon-white.png">
-    <script defer type="text/javascript" src="/global.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script defer type="text/javascript" src="index.js"></script>
+    <script defer type="text/javascript" src="../global.js"></script>
   </head>
   <body>
     <span class="material-symbols-outlined" id="settings_btn" style="display: none;">settings</span>
@@ -16,24 +17,24 @@
       <div id="root-folder-bundle-div" class="center" style="display:flex; flex-wrap: wrap;">
         <div onclick="window.location.href='https://displate.com/displate/5491240'">
           <div class="tn-container">
-            <img src="img/1.webp" class="folder-tn">
+            <img src="img/1.webp" class="folder-tn" alt="">
           </div>
           <h1>Displate</h1>
-          <h3>459 SEK</h3>
+          <h3><span id="displate-1" price="459" curr="SEK"></span></h3>
         </div>
         <div onclick="window.location.href='https://displate.com/displate/2504382'">
           <div class="tn-container">
-            <img src="img/2.webp" class="folder-tn">
+            <img src="img/2.webp" class="folder-tn" alt="">
           </div>
           <h1>Displate</h1>
-          <h3>459 SEK</h3>
+          <h3><span id="displate-2" price="459" curr="SEK"></span></h3>
         </div>
         <div onclick="window.location.href='https://displate.com/displate/4265646'">
           <div class="tn-container">
-            <img src="img/3.webp" class="folder-tn">
+            <img src="img/3.webp" class="folder-tn" alt="">
           </div>
           <h1>Displate</h1>
-          <h3>459 SEK</h3>
+          <h3><span id="displate-3" price="459" curr="SEK"></span></h3>
         </div>
       </div>
     </center>
