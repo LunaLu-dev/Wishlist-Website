@@ -43,7 +43,7 @@ async function GetItems() {
     const category = urlParams.get('category');
 
     try {
-        const response = await fetch('http://127.0.0.1:7002/?get=items&category=' + category);
+        const response = await fetch('https://db-api.wishlist.lunalu.org/?get=items&category=' + category);
         const data = await response.json();
 
         for (const item of data) {

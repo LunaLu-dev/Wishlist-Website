@@ -1,6 +1,6 @@
 //Read Data
 async function GetCategories() {
-    fetch('http://127.0.0.1:7002/?get=categories')
+    fetch('https://db-api.wishlist.lunalu.org/?get=categories')
         .then(response => response.json())
         .then(data => {
             data.forEach((item) => {
