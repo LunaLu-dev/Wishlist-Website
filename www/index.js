@@ -17,6 +17,8 @@ async function GetCategories() {
                 const title = document.createElement('h1');
                 title.innerText = item.title;
 
+                console.log("adding category: ", item.title)
+
                 const container = document.createElement('div');
                 container.classList.add("tn-container");
 
