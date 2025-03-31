@@ -25,8 +25,6 @@ async function setLocalCurrency() {
                         window.localStorage.setItem("currency", data.code);
                         console.log("Set localCurrency to: " + data.code);
                         localCurrency = data.code;
-
-
                     })
             })
 
@@ -37,16 +35,12 @@ async function setLocalCurrency() {
 
 
 async function GetItems() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // Get a specific parameter
-    const category = urlParams.get('category');
 
     try {
-        const response = await fetch('https://db-api-wishlist.lunalu.org/?get=items&category=' + category);
-        const data = await response.json();
+        const response = await fetch('https://db-api-wishlist.lunalu.org/?get=items&category=nsfw');
+        const data_nsfw = await response.json();
 
-        for (const item of data) {
+        for (const item of data_nsfw) {
             const product = document.createElement('div');
             product.setAttribute("onclick", "window.location.href='" + item.url + "'");
 
