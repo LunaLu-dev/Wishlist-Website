@@ -1,6 +1,10 @@
-//Read Data
 async function GetItems(){
-  fetch('http://127.0.0.1:7002/?get=items&category=displate')
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // Get a specific parameter
+  const category = urlParams.get('category');
+
+  fetch('http://127.0.0.1:7002/?get=items&category='+category)
       .then(response => response.json())
       .then(data => {
         data.forEach((item) => {
@@ -11,7 +15,7 @@ async function GetItems(){
           title.innerText = item.title;
 
           const price = document.createElement('h3');
-          price.innerText = item.price + " kr";
+          price.innerText = item.price + " " + item.currency;
 
 
           const container = document.createElement('div');
@@ -32,16 +36,4 @@ async function GetItems(){
       .catch(error => console.error('Error:', error));
 }
 
-GetItems();
-
-/*
-<div id=root-folder-bundle-div>
-  <div>
-      <div class="tn-container">
-        <img src=$imgsrc class="folder-tn">
-      </div>
-      <h1>$name</h1>
-  </div>
-</div>
-
-*/
+void GetItems();

@@ -6,7 +6,14 @@ async function GetCategories(){
             data.forEach((item) => {
 
                 const category = document.createElement('div');
-                category.setAttribute("onclick", "window.location.href='category?category="+item.code_name+"'");
+
+                if(item.external === true){
+                    category.setAttribute("onclick", "window.location.href='"+item.external_url+"'");
+                }else{
+                    category.setAttribute("onclick", "window.location.href='category?category="+item.code_name+"'");
+                }
+
+
 
                 const title = document.createElement('h1');
                 title.innerText = item.title;
