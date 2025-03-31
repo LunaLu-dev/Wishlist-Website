@@ -1,5 +1,5 @@
 //Read Data
-async function GetCategories(){
+async function GetCategories() {
     fetch('http://127.0.0.1:7002/?get=categories')
         .then(response => response.json())
         .then(data => {
@@ -7,12 +7,11 @@ async function GetCategories(){
 
                 const category = document.createElement('div');
 
-                if(item.external === true){
-                    category.setAttribute("onclick", "window.location.href='"+item.external_url+"'");
-                }else{
-                    category.setAttribute("onclick", "window.location.href='category?category="+item.code_name+"'");
+                if (item.external_state === true) {
+                    category.setAttribute("onclick", "window.location.href='" + item.external_url + "'");
+                } else {
+                    category.setAttribute("onclick", "window.location.href='category?category=" + item.code_name + "'");
                 }
-
 
 
                 const title = document.createElement('h1');
@@ -35,4 +34,4 @@ async function GetCategories(){
         .catch(error => console.error('Error:', error));
 }
 
-GetCategories();
+void GetCategories();
