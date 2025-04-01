@@ -4,6 +4,9 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+body{
+    background-image: url("img/background/background.png");
+}
 
 .mainTitle {
     font-size: 500%;

@@ -10,7 +10,7 @@ async function GetCategories() {
                 if (item.external_state === true) {
                     category.setAttribute("onclick", "window.location.href='" + item.external_url + "'");
                 } else {
-                    category.setAttribute("onclick", "window.location.href='category?get=items&category=" + item.code_name + "'");
+                    category.setAttribute("onclick", "window.location.href='category?category=" + item.code_name + "'");
                 }
 
 
